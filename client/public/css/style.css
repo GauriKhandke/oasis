@@ -1,0 +1,41 @@
+body {
+    background: #cac4c4;
+    }
+    
+    #app {
+      border-radius: 10px;
+      box-shadow: 2px 5px 12px -1px rgba(0,0,0,0.56);
+      padding: 20px;
+      background-color: white;
+      max-width: 500px;
+      margin: 15px auto;
+      text-align: center;
+      min-height: 500px;
+    }
+      
+      input {
+        
+        margin: 0 auto;
+        float: none;
+        width:100%;
+        max-width: 300px;
+        padding: 5px 10px;
+        border: 2px solid black;
+      }
+      ul {
+      margin: 0;
+      padding: 0;
+      }
+      li {
+        text-align: left;
+        padding: 5px 10px;
+        width: 100%;
+        max-width: 280px;
+        margin: 1px auto;
+        background-color: white;
+        border: 1px solid       black;
+        
+     
+        list-style: none;
+      }
+    
