@@ -4,7 +4,7 @@ class App extends React.Component {
     constructor() {
       super();
       this.state = {
-               appName: 'React Search Bar',
+               appName: 'Oasis',
         list: undefined,
       }
     }
