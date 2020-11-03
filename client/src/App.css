@@ -1,24 +1,71 @@
-.App {
+body {
+  font-family: "Abril Fatface", cursive;
+}
+.jumbotron {
+  width: 100%;
+}
+.loginNav {
+  align-items: right;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: absolute;
+  margin: 20px;
+  left: 0;
+  right: 0;
+  max-width: 200px;
+  padding: 16px;
+  background: none;
+}
+.content {
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  font-size: 45px;
+  transform: translate(-50%, -50%);
+}
+
+h1 {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+.base-container {
+  margin-top: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header {
   text-align: center;
+  font-size: 44px;
+  font-family: "Open Sans", sans-serif;
+  width: 200px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+input {
+  margin-top: 16px;
+  min-width: 28em;
+  height: 47px;
+  padding: 0px 10px;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+  background-color: #f3f3f3;
+  border: 0;
+  border-radius: 4px;
+  margin-bottom: 31px;
+  transition: all 250ms ease-in-out;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.btn {
+  position: absolute;
+  top: 8px;
+  right: 16px;
 }
