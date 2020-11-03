@@ -11,7 +11,7 @@ class RegisterForm extends React.Component {
             email: ''
         };
     }
-    // storing the user input
+    
     loginInput = (event) => {
         let user = event.target.name;
         let val = event.target.value;
