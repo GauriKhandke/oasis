@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const auth = require("../middleware/auth");
 
 module.exports = {
 
@@ -61,6 +62,7 @@ module.exports = {
   loginUser: async ({ body }, res) => {
     try {
       let { email, password } = body;
+      console.log("Email,Password :" + email,password);
 
       //validations
 
@@ -70,7 +72,7 @@ module.exports = {
 
       // fetching the data from DB
       const user = await User.findOne({ email: email });
-
+      
       // If user does not exists
       if (!user)
         return res
@@ -84,7 +86,9 @@ module.exports = {
       if (!pwdMatch)
         return res.status(400).json({ msg: "Invalid Credentials" });
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      console.log("Password Match : "+pwdMatch);
+
+      const token  = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       console.log("token: " + token);
 
       res.json({
@@ -100,4 +104,36 @@ module.exports = {
       res.status(500).json(err.message);
     }
   },
+
+  checkValidToken: async (req, res) => {
+    
+    try{
+      const token = req.header("x-auth-token");
+      
+      if(!token) return res.json(false);
+
+      const verified = jwt.verify(token, process.env.JWT_SECRET);
+      if(!verified) return res.json(false);
+
+      console.log("Verified User : "+ JSON.stringify(verified));
+      
+      const user = await User.findById(verified.id);
+      if(!user) return res.json(false);
+
+      return res.json(true);
+    }
+    catch(err){
+      res.status(500).json( { error : err.message} )
+    }
+  },
+
+  getAuthenticatedUser: async (req, res) => {
+    const user = await User.findById(req.userId);
+    res.json({
+      id: user._id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email
+    });
+  }
 };
