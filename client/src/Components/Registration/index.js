@@ -1,105 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import Header from '../Header';
+import axios from 'axios';
 
-class RegisterForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            firstName: '',
-            lastName: '',
-            username: '',
-            password: '',
-            email: ''
-        };
-    }
-    
-    loginInput = (event) => {
-        let user = event.target.name;
-        let val = event.target.value;
+export default function SignUp() {
+  const [firstname, setFirstName] = useState();
+  const [lastname, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  // Add error
 
-        this.setState({ [user]: val });
-    }
-    
-    handleRegister = event => {
-        event.preventDefault();
-        this.setState({
-            firstName: '',
-            lastName: '',
-            username: '',
-            password: ''
-        })
-    }
+  const history = useHistory();
 
-    render() {
-        return (
-            <div className="base-container">
-                <div>
-                <h2>Registration Form</h2>
-                </div>
-                <form>
-                    <div className="form-group">
-                        <label htmlFor="username">First Name </label>
-                        <input
-                            type="text"
-                            name="firstName"
-                            placeholder="First name"
-                            onChange={this.loginInput} 
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="username">Last Name </label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            placeholder="Last name"
-                            onChange={this.loginInput} 
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="username">E - Mail </label>
-                        <input
-                            type="text"
-                            name="email"
-                            placeholder="E-mail address"
-                            onChange={this.loginInput} 
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="username">Username </label>
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="username"
-                            onChange={this.loginInput}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="username">Password </label>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="password"
-                            onChange={this.loginInput}
-                        />
-                    </div>
-                    <div className="form-group">
-                    <label htmlFor="username">Confirm password </label>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Confirm password"
-                        onChange={this.loginInput}
-                    />
-                </div>
-                    <button
-                        className="btn-secondary mx-auto"
-                        type="submit"
-                        onClick={this.handleRegister.bind().this}
-                    >Login
-                </button>
-                </form>
-            </div>
-        )
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const newUser = { firstname, lastname, email, password, confirmPassword };
+
+      await axios.post('/api/signup', newUser);
+
+      history.push('/login');
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  return (
+    <div>
+      <Header />
+      <div className="base-container">
+        <div>
+          <h2>Sign Up</h2>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">First Name</label>
+            <input
+              type="text"
+              name="firstname"
+              placeholder="First name"
+              onChange={(event) => setFirstName(event.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="lastname">Last Name</label>
+            <input
+              type="text"
+              name="lastname"
+              placeholder="Last name"
+              onChange={(event) => setLastName(event.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              onChange={(event) => setConfirmPassword(event.target.value)}
+            />
+          </div>
+          <button className="btn-secondary mx-auto" type="submit">
+            Sign Up
+          </button>
+
+          <div className="mx-auto">
+            Already have an account? Please{' '}
+            {<Link to="/login">Login here</Link>}
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
-
-export default RegisterForm;
