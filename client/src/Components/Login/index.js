@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Login/style.css';
+import Navbar from './../Navbar/index';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -19,19 +20,22 @@ class LoginForm extends React.Component {
     // login handler
     handleLoginSubmit = event => {
         event.preventDefault();
-        this.setState({      
+        this.setState({
             username: '',
             password: ''
         })
-    
+
     }
 
     render() {
         return (
-            <div className="base-container mx-auto">
+            <div>
+                <Navbar />
+                <div className="base-container mx-auto">
+
                     <form className="login-form">
-                        <div className="form-group mx-auto">  
-                        <h3>Login Page</h3>
+                        <div className="form-group mx-auto">
+                            <h3>Login Page</h3>
                             <label htmlFor="username"> Username </label>
                             <input
                                 type="text"
@@ -60,7 +64,7 @@ class LoginForm extends React.Component {
                     </div>
                     </form>
                 </div>
-                
+            </div>
         );
     }
 }

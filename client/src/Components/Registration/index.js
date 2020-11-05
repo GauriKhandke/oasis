@@ -1,4 +1,6 @@
 import React from 'react';
+import Navbar from './../Navbar/index';
+
 
 class RegisterForm extends React.Component {
     constructor(props) {
@@ -31,6 +33,8 @@ class RegisterForm extends React.Component {
 
     render() {
         return (
+            <div>
+            <Navbar />
             <div className="base-container">
                 <div>
                 <h2>Registration Form</h2>
@@ -94,9 +98,10 @@ class RegisterForm extends React.Component {
                         className="btn-secondary mx-auto"
                         type="submit"
                         onClick={this.handleRegister.bind().this}
-                    >Login
+                    >Sign Up
                 </button>
                 </form>
+            </div>
             </div>
         )
     }
