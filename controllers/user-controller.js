@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
-const auth = require('../middleware/auth');
+const db = require('../models');
 
 module.exports = {
   // Register new user
@@ -35,7 +34,7 @@ module.exports = {
       }
 
       // checking in the DB for unique email address
-      const existingUser = await User.findOne({ email: email });
+      const existingUser = await db.User.findOne({ email: email });
 
       // If user with email already exists
       if (existingUser)
@@ -44,17 +43,18 @@ module.exports = {
       // hashing the password using bcrypt js
       const salt = await bcrypt.genSalt();
       const hashedPwd = await bcrypt.hash(password, salt);
-      console.log(hashedPwd);
+      console.log("Hashed Password : "+hashedPwd);
 
       // Create new user to register into db
-      const newUser = new User({
+      const newUser = new db.User({
         firstname,
         lastname,
         email,
         password: hashedPwd,
       });
 
-      // saving the new user in the database
+      console.log("New User : "+newUser);
+      
       const savedUser = await newUser.save();
       res.json(savedUser);
     } catch (err) {
@@ -75,8 +75,8 @@ module.exports = {
         return res.status(400).json({ msg: 'Fields cannot be empty!' });
 
       // fetching the data from DB
-      const user = await User.findOne({ email: email });
-
+      const user = await db.User.findOne({ email: email });
+      console.log(user);
       // If user does not exists
       if (!user)
         return res.status(400).json({

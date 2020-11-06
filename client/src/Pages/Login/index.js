@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import userContext from '../../Context/UserContext';
-import Header from '../Header';
-import axios from 'axios';
+import Header from '../../Components/Header';
+import API from '../../utils/API'
 import './style.css';
-import { TokenExpiredError } from 'jsonwebtoken';
+// import { TokenExpiredError } from 'jsonwebtoken';
 
 export default function Login() {
   const [email, setEmail] = useState();
@@ -18,7 +18,7 @@ export default function Login() {
 
     try {
       const loginUser = { email, password };
-      const loginRes = await axios.post('/api/login', loginUser);
+      const loginRes = await API.loginRes(loginUser);
 
       setUserData({
         token: loginRes.data.token,

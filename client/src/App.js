@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LandingPage from './Components/LandingPage';
-import LoginForm from './Components/Login';
-import RegisterForm from './Components/Registration';
-import Journal from './Components/Pages/Journal';
+import Login from './Pages/Login';
+import Signup from './Pages/Signup';
+import Journal from './Pages/Journal/Journal';
 import UserContext from './Context/UserContext';
-import axios from 'axios';
+import API from './utils/API'
 import './App.css';
 
 function App() {
@@ -23,14 +23,10 @@ function App() {
         token = '';
       }
 
-      const tokenResponse = await axios.post('/isValidToken', null, {
-        headers: { 'x-auth-token': token },
-      });
+      const tokenResponse = await API.checkValidToken(token);
 
       if (tokenResponse.data) {
-        const userResponse = await axios.get('/', {
-          headers: { 'x-auth-token': token },
-        });
+        const userResponse = await API.authenticateUser(token);
 
         setUserData({
           token,
@@ -47,8 +43,8 @@ function App() {
       <UserContext.Provider value={{ userData, setUserData }}>
         <Switch>
           <Route exact path="/" exact component={LandingPage} />
-          <Route path="/login" exact component={LoginForm} />
-          <Route path="/signup" exact component={RegisterForm} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
           <Route path="/journal" exact component={Journal} />
         </Switch>
       </UserContext.Provider>

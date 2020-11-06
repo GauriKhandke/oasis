@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Header from '../Header';
-import axios from 'axios';
+import Header from '../../Components/Header';
+import API from '../../utils/API'
 
 export default function SignUp() {
   const [firstname, setFirstName] = useState();
@@ -19,7 +19,7 @@ export default function SignUp() {
     try {
       const newUser = { firstname, lastname, email, password, confirmPassword };
 
-      await axios.post('/api/signup', newUser);
+      await API.SignUpRes(newUser);
 
       history.push('/login');
     } catch (error) {

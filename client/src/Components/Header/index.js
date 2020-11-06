@@ -5,9 +5,9 @@ import './style.css';
 
 function Header() {
   return (
-    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2">
-      <div class="navbar-header">
-        <h3 class="navbar-brand">Oasis</h3>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light py-2">
+      <div className="navbar-header">
+        <h3 className="navbar-brand">Oasis</h3>
       </div>
       <AuthOptions />
     </nav>
