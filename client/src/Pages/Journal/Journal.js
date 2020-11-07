@@ -15,6 +15,7 @@ export default function Journal() {
         <div>
           <h3>Welcome to our Journal Page!!!</h3>
           <Calendario />
+          <Input/>
           <TextArea />
           <FormBtn />
         </div>
