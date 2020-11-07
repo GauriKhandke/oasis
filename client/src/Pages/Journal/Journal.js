@@ -10,6 +10,7 @@ import './style.css';
 export default function Journal() {
 	const { userData } = useContext(UserContext);
 
+<<<<<<< HEAD
 	return (
 		<>
 			<Header />
@@ -42,4 +43,24 @@ export default function Journal() {
 			)}
 		</>
 	);
+=======
+  return (
+    <div>
+      <Header />
+      {userData.user ? (
+        <div>
+          <h3>Welcome to our Journal Page!!!</h3>
+          <Calendario />
+          <Input/>
+          <TextArea />
+          <FormBtn />
+        </div>
+      ) : (
+        <>
+          <Link to="/login">Please login</Link>
+        </>
+      )}
+    </div>
+  );
+>>>>>>> Title component
 }
