@@ -6,7 +6,7 @@ function Alert(props) {
 			role="alert"
 			className={`alert alert-${props.type} alert-dismissible fade show`}
 			style={{
-				width: '80%',
+				width: '100%',
 				margin: '0 auto',
 				marginTop: 18
 				// ...props.style,

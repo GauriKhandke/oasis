@@ -1,10 +1,42 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import Header from '../../Components/Header';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  makeStyles,
+  Container,
+} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import Alert from '../../Components/Alert';
-import API from '../../utils/API'
+import API from '../../utils/API';
 
-export default function SignUp() {
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+export default function Signup() {
+  const classes = useStyles();
+
   const [firstname, setFirstName] = useState();
   const [lastname, setLastName] = useState();
   const [email, setEmail] = useState();
@@ -30,69 +62,104 @@ export default function SignUp() {
   };
 
   return (
-    <div>
-      <Header />
-      {error && < Alert message={error} type="danger" />}
-      <div className="base-container">
-        <div>
-          <h2>Sign Up</h2>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">First Name</label>
-            <input
-              type="text"
-              name="firstname"
-              placeholder="First name"
-              onChange={(event) => setFirstName(event.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="lastname">Last Name</label>
-            <input
-              type="text"
-              name="lastname"
-              placeholder="Last name"
-              onChange={(event) => setLastName(event.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="password"
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              onChange={(event) => setConfirmPassword(event.target.value)}
-            />
-          </div>
-          <button className="btn-secondary mx-auto" type="submit">
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}></Avatar>
+        <Typography component="h1" variant="h5">
+          Sign Up
+        </Typography>
+        {error && (
+              <Alert
+                message={error}
+                type="danger"
+                clearError={() => setError(undefined)}
+              />
+            )}
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="fname"
+                name="firstname"
+                variant="outlined"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                autoFocus
+                onChange={(event) => setFirstName(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastname"
+                autoComplete="lname"
+                onChange={(event) => setLastName(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                autoComplete="current-password"
+                onChange={(event) => setConfirmPassword(event.target.value)}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
             Sign Up
-          </button>
-
-          <div className="mx-auto">
-            Already have an account? Please{' '}
-            {<Link to="/login">Login here</Link>}
-          </div>
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="/login" variant="body2">
+                Already have an account? Login
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
-    </div>
+    </Container>
   );
 }

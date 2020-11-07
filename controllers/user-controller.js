@@ -32,18 +32,18 @@ module.exports = {
 			) {
 				return res
 					.status(400)
-					.json({ msg: 'All fields are required!!' });
+					.json({ msg: 'Fields cannot be empty' });
 			}
 			// validation email
 			if (!validator.isEmail(email))
 				return res.status(400).json({
-					msg: 'Invalid Email!',
+					msg: 'Please enter a valid Email',
 				});
 
 			// validation for password length
 			if (password.length < 8) {
 				return res.status(400).json({
-					msg: 'Password should contain atleast 8 characters!!',
+					msg: 'Password should contain atleast 8 characters!',
 				});
 			}
 
@@ -95,12 +95,12 @@ module.exports = {
 			if (!email || !password)
 				return res
 					.status(400)
-					.json({ msg: 'Fields cannot be empty!' });
+					.json({ msg: 'Fields cannot be empty' });
 
 			// validations for email
 			if (!validator.isEmail(email))
 				return res.status(400).json({
-					msg: 'Invalid Email!',
+					msg: 'Please Enter a valid Email !!',
 				});
 
 			// fetching the data from DB
