@@ -1,82 +1,133 @@
 import React, { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import userContext from '../../Context/UserContext';
-import Header from '../../Components/Header';
 import API from '../../utils/API';
-import './style.css';
 import Alert from '../../Components/Alert';
-// import { TokenExpiredError } from 'jsonwebtoken';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  makeStyles,
+  Container,
+} from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 export default function Login() {
-	const [email, setEmail] = useState();
-	const [password, setPassword] = useState();
-	const [error, setError] = useState();
+  const classes = useStyles();
 
-	const { setUserData } = useContext(userContext);
-	const history = useHistory();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [error, setError] = useState();
 
-	const handleSubmit = async (event) => {
-		event.preventDefault();
+  const { setUserData } = useContext(userContext);
+  const history = useHistory();
 
-		try {
-			const loginUser = { email, password };
-			const loginRes = await API.loginRes(loginUser);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-			setUserData({
-				token: loginRes.data.token,
-				user: loginRes.data.user,
-			});
+    try {
+      const loginUser = { email, password };
+      const loginRes = await API.loginRes(loginUser);
 
-			localStorage.setItem('auth-token', loginRes.data.token);
-			history.push('/journal');
-		} catch (error) {
-			console.log('Error : ' + error);
-			error.response.data.msg && setError(error.response.data.msg);
-		}
-	};
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
 
-	return (
-		<div>
-			<Header />
-			{error && < Alert message={error} type="danger" clearError={() => setError(undefined)} />}
-			<div className="base-container mx-auto">
-				<form className="login-form" onSubmit={handleSubmit}>
-					<div className="form-group mx-auto">
-						<h3>Login</h3>
-						<label htmlFor="email">Email</label>
-						<input
-							type="text"
-							name="email"
-							placeholder="Email"
-							onChange={(event) =>
-								setEmail(event.target.value)
-							}
-						/>
-					</div>
-					<div className="form-group mx-auto">
-						<label htmlFor="password">Password</label>
-						<input
-							type="password"
-							name="password"
-							placeholder="Password"
-							onChange={(event) =>
-								setPassword(event.target.value)
-							}
-						/>
-					</div>
-					<button
-						className="btn-secondary mx-auto"
-						type="submit"
-					>
-						Login
-					</button>
+      localStorage.setItem('auth-token', loginRes.data.token);
+      history.push('/journal');
+    } catch (error) {
+      console.log('Error : ' + error);
+      error.response.data.msg && setError(error.response.data.msg);
+    }
+  };
 
-					<div className="mx-auto">
-						Not a member? Please{' '}
-						{<Link to="/signup">Sign Up</Link>}
-					</div>
-				</form>
-			</div>
-		</div>
-	);
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}></Avatar>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        {error && (
+              <Alert
+                message={error}
+                type="danger"
+                clearError={() => setError(undefined)}
+              />
+            )}
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Login
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="/signup" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+  );
 }
