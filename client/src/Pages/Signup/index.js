@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../../Components/Header';
+import Alert from '../../Components/Alert';
 import API from '../../utils/API'
 
 export default function SignUp() {
@@ -9,7 +10,7 @@ export default function SignUp() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  // Add error
+  const [error, setError] = useState();
 
   const history = useHistory();
 
@@ -24,12 +25,14 @@ export default function SignUp() {
       history.push('/login');
     } catch (error) {
       console.log(error);
+      error.response.data.msg && setError(error.response.data.msg);
     }
   };
 
   return (
     <div>
       <Header />
+      {error && < Alert message={error} type="danger" />}
       <div className="base-container">
         <div>
           <h2>Sign Up</h2>
