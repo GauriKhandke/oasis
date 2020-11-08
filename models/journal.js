@@ -5,7 +5,7 @@ const journalSchema = new Schema({
     title :{
         type:String,
         trim:true,
-        required:'Journal Title cannot be Empty'
+       // required:'Journal Title cannot be Empty'
     },
 
     body:{
