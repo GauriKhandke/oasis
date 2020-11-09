@@ -22,6 +22,7 @@ export default function Journal() {
         </div>
       ) : (
         <>
+
           <Link to="/login">Please login</Link>
         </>
       )}
