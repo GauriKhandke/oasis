@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../Components/Header';
 import UserContext from '../../Context/UserContext';
 import Calendario from '../../Components/Calendar';
+import RecentNotes from '../../Components/RecentNotes';
 import { Input, TextArea, FormBtn } from '../../Components/TextField';
 
 export default function Journal() {
@@ -17,6 +18,7 @@ export default function Journal() {
           <Calendario />
           <TextArea />
           <FormBtn />
+		  <RecentNotes />
         </div>
       ) : (
         <>
