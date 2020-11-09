@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../LandingPage/style.css';
 
+
 class LandingPage extends Component {
+
+
   render() {
     return (
       <>
@@ -18,9 +21,12 @@ class LandingPage extends Component {
             </ul>
           </div>
         </nav>
-
         <div className="landingImg">
           <div className="content">Welcome to Oasis</div>
+          <div className="text-center">
+            <h1>Discover Oasis</h1>
+            <h2>Keep a Diary, One day it will keep you</h2>
+          </div>
         </div>
       </>
     );
