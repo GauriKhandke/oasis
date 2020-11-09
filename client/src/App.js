@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LandingPage from './Components/LandingPage';
+import RecentNotes from './Components/RecentNotes';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Journal from './Pages/Journal/Journal';
