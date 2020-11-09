@@ -2,33 +2,40 @@ const db = require('../models');
 
 module.exports = {
   // Fetching all the journal entries of user
-  findAllEntries: function (req, res) {
-    console.log('User Id :' + req.body.id);
-    db.Journal.find({ userId: req.body.id })
-      .sort({ date: -1 })
-      .then((dbData) => res.json(dbData))
-      .catch((err) => res.status(422).json(err));
+  findAllEntries: async (req, res) => {
+    try {
+      console.log('User ID : ' + req.body.id);
+      const allEntries = await db.Journal.find({ userId: req.body.id });
+       return res.json(allEntries);
+    } catch (error) {
+      res.status(422).json(error);
+    }
   },
 
-  createEntry: function (req, res) {
-    const newNote = new db.Journal(req.body);
-    // newNote.User = req.user.id;
-    db.Journal.create(newNote)
-      .then((dbData) => res.json(dbData))
-      .catch((err) => res.status(422).json(err));
+  // In sert new journal entry in database
+  createEntry: async (req, res) => {
+    try {
+      console.log("user info" + JSON.stringify(req.body));
+      const newNote = new db.Journal(req.body);
+      const note = await db.Journal.create(newNote);
+      return res.json(note);
+    } catch (error) {
+      res.status(422).json(error);
+    }
   },
 
-  getOneEntry: function (req, res) {
+  getOneEntry: async (req, res) => {
     console.log(
       'noteId:' + req.params.noteId + 'userid test : ' + req.query.userId
     );
-    //db.Journal.findOne({_id: req.params.noteId, userId: req.body.id })
-
-    db.Journal.findOne({
-      $and: [{ _id: req.params.noteId }, { userId: req.query.userId }],
-    })
-      .then((dbData) => res.json(dbData))
-      .catch((err) => res.status(422).json(err));
+    try {
+      const findNote = await db.Journal.findOne({
+        $and: [{ _id: req.params.noteId }, { userId: req.query.userId }],
+      });
+      return res.json(findNote);
+    } catch (error) {
+      res.status(422).json(error);
+    }
   },
 
   updateOneEntry: async (req, res) => {
@@ -46,13 +53,16 @@ module.exports = {
     }
   },
 
-  removeOneEntry: function (req, res) {
-    db.Journal.findOneAndDelete({
-      _id: req.params.noteId,
-      userId: req.query.userId,
-    })
-      .then((dbData) => dbData.remove())
-      .then((dbData) => res.json(dbData))
-      .catch((err) => res.status(422).json(err));
+  removeOneEntry: async (req, res) => {
+    try {
+      const deletedNote = await db.Journal.findOneAndDelete({
+        _id: req.params.noteId,
+        userId: req.query.userId,
+      });
+     // const deletedNote = await note.remove();
+      return res.json(deletedNote);
+    } catch (error) {
+      res.status(422).json(error);
+    }
   },
 };
