@@ -17,10 +17,10 @@ const journalSchema = new Schema({
         type: Date,
         default: Date.now()
     },
-    pic_link: {
-        type: String,
-      },
-    user: {
+    // pic_link: {
+    //     type: String,
+    //   },
+    userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
