@@ -29,6 +29,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/oasis-diary",{
 // Define API routes here
 // Add routes, both API and view
 app.use("/",require("./routes/user-routes"));
+app.use("/api/notes",require("./routes/journal-routes"));
 
 
 // Send every other request to the React app

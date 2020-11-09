@@ -27,6 +27,7 @@ function App() {
 
       if (tokenResponse.data) {
         const userResponse = await API.authenticateUser(token);
+        console.log(userResponse.data);
 
         setUserData({
           token,
