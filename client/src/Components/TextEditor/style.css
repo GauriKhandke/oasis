@@ -1,0 +1,10 @@
+.borderStyle {
+	border: 3px solid #6495ed;
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: gray;
+}
+
+/* .rdw-editor-toolbar {
+	background: #6495ed;
+} */
