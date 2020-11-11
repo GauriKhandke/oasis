@@ -67,14 +67,15 @@ export default function EditorConvertToJSON() {
 
 				<Editor
 					initialContentState={content}
-					wrapperClassName="demo-wrapper"
-					editorClassName="demo-editor"
+					wrapperClassName="wrapper-class"
+					editorClassName="editor-class"
+					toolbarClassName="toolbar-class"
 					// contentState={contentState}
 					// value={contentState}
 					onContentStateChange={(contentState) =>
 						setContentState(contentState)
 					}
-					placeholder="   Let's talk about your day here.."
+					placeholder="Let's talk about your day here.."
 				/>
 				<div className="text-center">
 					<FormBtn
@@ -88,7 +89,7 @@ export default function EditorConvertToJSON() {
 
 			<textarea
 				disabled
-				value={JSON.stringify(contentState, null, 10)}
+				value={JSON.stringify(contentState, null, 4)}
 			/>
 		</div>
 	);
