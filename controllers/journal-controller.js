@@ -17,9 +17,12 @@ module.exports = {
     try {
       console.log("user info" + JSON.stringify(req.body));
       const newNote = new db.Journal(req.body);
+      console.log("New Note : "+JSON.stringify(newNote));
       const note = await db.Journal.create(newNote);
+      console.log("Saved Note: "+JSON.stringify(note));
       return res.json(note);
     } catch (error) {
+      console.log("Create Entry Error: "+error);
       res.status(422).json(error);
     }
   },

@@ -9,7 +9,7 @@ const journalSchema = new Schema({
     },
 
     body:{
-        type:String,
+        type:Object,
         trim:true,
     },
 
