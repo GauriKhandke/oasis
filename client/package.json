@@ -18,7 +18,8 @@
     "react-dom": "^16.13.1",
     "react-draft-wysiwyg": "^1.14.5",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-simple-animate": "^3.3.10"
   },
   "scripts": {
     "start": "react-scripts start",
