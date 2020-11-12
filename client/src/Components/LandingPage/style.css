@@ -6,24 +6,33 @@
   background-size: cover;
   /* background-size: 100%; */
 }
-.navbar-brand {
-font-family: 'Faster One', cursive;
+.navbar-brand,
+.navbar-header, .nav-item {
+  font-family: "Rozha One", serif;
+  padding: 80px 22px;
+  text-align: center;
 }
-.content {
-  font-family: "Marck Script", cursive;
+.icon {
   position: absolute;
-  top: 20%;
-  left: 50%;
-  font-size: 45px;
-  transform: translate(-50%, -50%);
-}
-.nav-item,
-.navbar-brand {
   font-size: x-large;
+  top: 20%;
+  left: 47%;
+}
+.nav-link {
+  position: absolute;
+  font-family: "Rozha One", serif;
+  top: 30%;
+  left: 85%;
 }
 .text-center {
-	font-family: "Marck Script", cursive;
-	position: absolute;
-	top: 40%;
-	left: 35%;
+  font-family: "Rozha One", serif;
+  color: white;
+  position: absolute;
+  top: 60%;
+  left: 10%;
+}
+.logo {
+  position: absolute;
+  top: 5%;
+  left: 43%;
 }
