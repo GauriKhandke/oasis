@@ -1,12 +1,13 @@
-import React from "react";
+import React from 'react';
 
-export function FormBtn(props) {
-  return (
-    <button {...props} style={{ float: "right", marginBottom: 10 }} className="btn btn-success">
-      {props.children}
-    </button>
-  );
+export default function FormBtn(props) {
+	return (
+		<button
+			{...props}
+			style={{ float: 'center', marginBottom: 0, marginTop: 10 }}
+			className="btn btn-primary"
+		>
+			{props.children}
+		</button>
+	);
 }
-
-
-
