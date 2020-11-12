@@ -19,19 +19,21 @@ export default function Journal() {
 				<>
 					<Container fluid="xs">
 						<Row>
-							<Col md={3}>
-								<Calendario />
+							<Col md={2}>
+								{/* <Calendario /> */}
 							</Col>
 
-							<Col md={9}>
+							<Col md={8}>
 								<Row>
-									<Col md={10}>
+									<Col md={12}>
 										<TextEditor />
 										{/* <TextArea /> */}
 										{/* <FormBtn /> */}
 										{/* <RecentNotes /> */}
 									</Col>
 								</Row>
+							</Col>
+							<Col md={2}>
 							</Col>
 						</Row>
 					</Container>

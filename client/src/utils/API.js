@@ -26,6 +26,11 @@ export default {
 
   // Journal API calls :
 
+  checkAJournalEntry: function(entryDate, userId){
+    console.log("Entry Date : "+entryDate+ " UserId : "+userId);
+    return axios.get('/api/notes/entrydate/'+ entryDate, { params : {userId} });
+  },
+
   // API call to fetch all journal entries of logged in user
   findAllJournalEntries : function(userId){
     return axios.get('/api/notes',userId);
