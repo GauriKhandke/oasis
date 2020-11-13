@@ -23,9 +23,10 @@ module.exports = {
 			const note = await db.Journal.create(newNote);
 			console.log('Saved Note: ' + JSON.stringify(note));
 			return res.json(note);
+			
 		} catch (error) {
 			console.log('Create Entry Error: ' + error);
-			res.status(422).json(error);
+			res.status(422).json({ msg: 'Error creating Journal Entry' });
 		}
 	},
 
