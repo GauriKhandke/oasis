@@ -51,6 +51,11 @@ export default {
     return axios.put('/api/notes/'+noteId, updatedEntry, {params : {userId } });
   },
 
+  // updateJournalEntry : function(entryDate, userId){
+  //   console.log("Entry Date : "+entryDate+ " UserId : "+userId);
+  //   return axios.get('/api/notes/'+ entryDate, { params : {userId} });
+  // }
+
   // Delete one entry by noteId, userId
   removeOneJournalEntry : function(noteId, userId){
     return axios.delete('/api.notes/'+noteId, { params : { userId } } );

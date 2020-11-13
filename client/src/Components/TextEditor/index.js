@@ -1,188 +1,181 @@
 import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../../Context/UserContext';
 import API from '../../utils/API';
-import { Editor } from 'react-draft-wysiwyg';
-import { convertFromRaw } from 'draft-js';
 import Input from '../EditorTitle';
 import FormBtn from '../FormBtn';
-// import DatePickers from '../DatePicker';
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './style.css';
 import { Row, Col } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import { TextField } from '@material-ui/core';
 import moment from 'moment';
-
-//Journal Body object which should be saved in the database
-const content = {
-	entityMap: {},
-	blocks: [
-		{
-			key: '637gr',
-			text: 'Initial Text',
-			type: 'unstyled',
-			depth: 0,
-			inlineStyleRanges: [],
-			entityRanges: [],
-			data: {},
-		},
-	],
-};
 
 // Material UI styles
 
 const useStyles = makeStyles((theme) => ({
-	container: {
-		display: 'flex',
-		flexWrap: 'wrap',
-	},
-	textField: {
-		marginLeft: theme.spacing(1),
-		marginRight: theme.spacing(1),
-		width: 200,
-	},
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
 }));
 
 export default function EditorConvertToJSON() {
-	// Styles of Material UI
-	const classes = useStyles();
+  // Styles of Material UI
+  const classes = useStyles();
 
-	// Converting the date format to yyyy-mm-dd
-	const today = moment().format('YYYY MM DD').split(' ').join('-');
-	console.log("today's date is : " + today);
+  // Converting the date format to yyyy-mm-dd
+  const today = moment().format('YYYY MM DD').split(' ').join('-');
+  console.log("today's date is : " + today);
 
-	// Initial States
-	const [title, setTitle] = useState('');
-	const [contentState, setContentState] = useState(content);
-	const [date, setDate] = useState(today);
-	//convertFromRaw(content);
-	console.log(contentState);
-	//Fetching the values of user
-	const { userData } = useContext(UserContext);
+  // Initial States
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [date, setDate] = useState(today);
 
-	// Render the ondateChange when the user is trying to change the date
-	const onDateChange = async (event) => {
-		let val = event.target.value;
-		val = val.split(' ').join('-');
-		console.log('--- date changed: ', val.toString());
-		setDate(val);
+  //Fetching the values of user
+  const { userData } = useContext(UserContext);
 
-		const journalEntryCheck = await API.checkAJournalEntry(
-			val,
-			userData.user.id
-		);
-		console.log(
-			'\n\nJournal Entry Check: ' + JSON.stringify(journalEntryCheck)
-		);
-		// if (journalEntryCheck.data.length === 0) {
-		// setContentState(content);
-		// 	setTitle('');
-		// } else {
-		// console.log(contentState);
-		console.log(journalEntryCheck.data);
-		setTitle(journalEntryCheck.data.title);
-		setContentState(
-			convertFromRaw(journalEntryCheck.data.body));
-		console.log(journalEntryCheck.data.body);
-		// console.log(journalEntryCheck.data.body);
-		console.log(contentState);
-		//}
-	};
+  // Render the ondateChange when the user is trying to change the date
+  const onDateChange = async (event) => {
+    setTitle('');
+    setBody('');
 
-	// Render this function when user clicks on submit
-	const handleFormSubmit = async (event) => {
-		event.preventDefault();
+    let dateVal = event.target.value;
+    dateVal = dateVal.split(' ').join('-');
+    console.log('--- date changed: ', dateVal.toString());
+    setDate(dateVal);
 
-		if (title === '' || contentState.blocks === undefined) return;
+    const journalEntryCheck = await API.checkAJournalEntry(
+      dateVal,
+      userData.user.id
+    );
+    console.log(
+      '\n\nJournal Entry Check: ' + JSON.stringify(journalEntryCheck)
+    );
 
-		console.log(contentState);
-		return;
+    setTitle(journalEntryCheck.data.title);
+    setBody(journalEntryCheck.data.body);
+    console.log('body: ' + body);
+  };
 
-		// Journal Entry obj
-		const journalEntry = {
-			title: title,
-			body: contentState,
-			entryDate: date,
-			userId: userData.user.id,
-		};
+  // Render this function when user clicks on submit
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
-		console.log('\n\nJournal Entry : ' + JSON.stringify(journalEntry));
+    if (title === '' || body === '') return;
 
-		// Call API to create jounal entry
-		const newEntry = await API.createJournalEntry(journalEntry);
-		console.log('\n\nNew Entry: ' + JSON.stringify(newEntry));
+    //Check to see if user had already submitted the note for the day
+    const journalEntryCheck = await API.checkAJournalEntry(
+      date,
+      userData.user.id
+    );
 
-		setTitle('');
-		setContentState(content);
-		console.log(contentState);
-	};
+    console.log(
+      '\n\nJournal Entry Check after submit: ' +
+        JSON.stringify(journalEntryCheck)
+    );
 
-	// JSX to render the page
-	return (
-		<div>
-			<div className="text-center">
-				<h2>Enter your Journal Entry</h2>
-			</div>
-			<div className="borderStyle">
-				{/* <EditorTitle value = {title} name = {title} onChange={(event) => setTitle(event.target.value) }/> */}
-				<Row>
-					<Col md={8}>
-						<Input
-							onChange={(event) =>
-								setTitle(event.target.value)
-							}
-							name="title"
-							value={title}
-							placeholder="Title"
-						/>
-					</Col>
-					<Col md={4}>
-						{/* <DatePickers /> */}
-						<form className={classes.container} noValidate>
-							<TextField
-								id="date"
-								value={date}
-								label="Date"
-								type="date"
-								variant="outlined"
-								// defaultValue={date}
-								className={classes.textField}
-								onChange={onDateChange}
-								InputLabelProps={{
-									shrink: true,
-								}}
-							/>
-						</form>
-					</Col>
-				</Row>
-				<br />
+    if (JSON.stringify(journalEntryCheck.data) === '{}') {
+      console.log('Test for a empty object');
 
-				<Editor
-					initialContentState={content}
-					wrapperClassName="wrapper-class"
-					editorClassName="editor-class"
-					toolbarClassName="toolbar-class"
-					// contentState={contentState}
-					// value={contentState}
-					onContentStateChange={(contentState) =>
-						setContentState(contentState)
-					}
-					placeholder="Let's talk about your day here.."
-				/>
-				<div className="text-center">
-					<FormBtn
-						// disabled={!title && contentState.length === 0}
-						onClick={handleFormSubmit}
-					>
-						Submit
-					</FormBtn>
-				</div>
-			</div>
+      // Journal Entry obj
+      const journalEntry = {
+        title: title,
+        body: body,
+        entryDate: date,
+        userId: userData.user.id,
+      };
 
-			<textarea
-				disabled
-				value={JSON.stringify(contentState, null, 4)}
-			/>
-		</div>
-	);
+      // Call API to create jounal entry
+      const newEntry = await API.createJournalEntry(journalEntry);
+      console.log('\n\nCreate New Entry : ' + JSON.stringify(newEntry));
+
+      setTitle('');
+      setBody('');
+      console.log('Body: ' + body);
+    } else {
+      const updateEntry = {
+        title: title,
+        body: body,
+      };
+
+      const noteId = journalEntryCheck.data._id;
+      const userId = userData.user.id;
+      console.log('Note id for update entry: ' + journalEntryCheck.data._id);
+
+      // Call API to update jounal entry
+      const updatedEntry = await API.updateOneJournalEntry(
+        noteId,
+        userId,
+        updateEntry
+      );
+      console.log('\n\nUpdated Entry : ' + JSON.stringify(updatedEntry));
+
+      setTitle('');
+      setBody('');
+      console.log('Body: ' + body);
+    }
+  };
+
+
+
+  // JSX to render the page
+  return (
+    <div>
+      <div className="text-center">
+        <h2>Enter your Journal Entry</h2>
+      </div>
+      <div className="borderStyle">
+        {/* <EditorTitle value = {title} name = {title} onChange={(event) => setTitle(event.target.value) }/> */}
+        <Row>
+          <Col md={8}>
+            <Input
+              onChange={(event) => setTitle(event.target.value)}
+              name="title"
+              value={title}
+              placeholder="Title"
+            />
+          </Col>
+          <Col md={4}>
+            {/* <DatePickers /> */}
+            <form className={classes.container} noValidate>
+              <TextField
+                id="date"
+                value={date}
+                label="Date"
+                type="date"
+                variant="outlined"
+                // defaultValue={date}
+                className={classes.textField}
+                onChange={onDateChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </form>
+          </Col>
+        </Row>
+        <br />
+
+        <div className="form-group">
+          <textarea
+            className="form-control"
+            rows="10"
+            cols="100"
+            value={body}
+            onChange={(event) => setBody(event.target.value)}
+          />
+        </div>
+        <div className="text-center">
+          <FormBtn disabled={!title || !body} onClick={handleFormSubmit}>
+            Submit
+          </FormBtn>
+        </div>
+      </div>
+    </div>
+  );
 }
