@@ -3,6 +3,7 @@ import UserContext from '../../Context/UserContext';
 import API from '../../utils/API';
 import Input from '../EditorTitle';
 import FormBtn from '../FormBtn';
+import Alert from '../../Components/Alert';
 import './style.css';
 import { Row, Col } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EditorConvertToJSON() {
+export default function JournalEntryForm() {
   // Styles of Material UI
   const classes = useStyles();
 
@@ -35,9 +36,26 @@ export default function EditorConvertToJSON() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [date, setDate] = useState(today);
+  const [successAlert, setSuccessAlert] = useState();
 
   //Fetching the values of user
   const { userData } = useContext(UserContext);
+
+  useEffect(() => {
+    todayEntryCheck();
+  }, []);
+
+  //Fetch the data if the user had already entry with current date
+  async function todayEntryCheck() {
+    const todaysEntry = await API.checkAJournalEntry(today, userData.user.id);
+
+    console.log('todays Entry : ' + JSON.stringify(todaysEntry));
+
+    if (JSON.stringify(todaysEntry.data) !== '{}') {
+      setTitle(todaysEntry.data.title);
+      setBody(todaysEntry.data.body);
+    }
+  }
 
   // Render the ondateChange when the user is trying to change the date
   const onDateChange = async (event) => {
@@ -94,6 +112,10 @@ export default function EditorConvertToJSON() {
       const newEntry = await API.createJournalEntry(journalEntry);
       console.log('\n\nCreate New Entry : ' + JSON.stringify(newEntry));
 
+      if (JSON.stringify(newEntry) !== {}) {
+        setSuccessAlert('Journal Entry Created successfully!!');
+      }
+
       setTitle('');
       setBody('');
       console.log('Body: ' + body);
@@ -115,13 +137,15 @@ export default function EditorConvertToJSON() {
       );
       console.log('\n\nUpdated Entry : ' + JSON.stringify(updatedEntry));
 
+      if (JSON.stringify(updatedEntry) !== {}) {
+        setSuccessAlert('Journal Entry Updated!! ');
+      }
+
       setTitle('');
       setBody('');
       console.log('Body: ' + body);
     }
   };
-
-
 
   // JSX to render the page
   return (
@@ -129,6 +153,7 @@ export default function EditorConvertToJSON() {
       <div className="text-center">
         <h2>Enter your Journal Entry</h2>
       </div>
+
       <div className="borderStyle">
         {/* <EditorTitle value = {title} name = {title} onChange={(event) => setTitle(event.target.value) }/> */}
         <Row>
@@ -176,6 +201,14 @@ export default function EditorConvertToJSON() {
           </FormBtn>
         </div>
       </div>
+      <br />
+      {successAlert && (
+        <Alert
+          message={successAlert}
+          type="success"
+          clearSuccessAlert={() => setSuccessAlert(undefined)}
+        />
+      )}
     </div>
   );
 }
