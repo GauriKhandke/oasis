@@ -17,6 +17,8 @@
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	height: 250px;
+	overflow: auto;
+  box-sizing: border-box;
 }
 
 .editor-class:focus-within {
