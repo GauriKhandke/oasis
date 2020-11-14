@@ -6,33 +6,44 @@
   background-size: cover;
   /* background-size: 100%; */
 }
-.navbar-brand,
-.navbar-header, .nav-item {
-  font-family: "Rozha One", serif;
-  padding: 80px 22px;
-  text-align: center;
-}
-.icon {
-  position: absolute;
-  font-size: x-large;
-  top: 20%;
-  left: 47%;
-}
-.nav-link {
-  position: absolute;
-  font-family: "Rozha One", serif;
-  top: 30%;
-  left: 85%;
-}
 .text-center {
   font-family: "Rozha One", serif;
   color: white;
   position: absolute;
-  top: 60%;
+  top: 40%;
   left: 10%;
+}
+.jumbotron {
+  background-color: white;
+  width: 100%;
+  padding: 65px;
 }
 .logo {
   position: absolute;
-  top: 5%;
-  left: 43%;
+  top: 2%;
+  left: 42%;
+}
+.icon {
+  position: absolute;
+  font-family:  serif;
+  font-size: 50px;
+  top: 13%;
+  left: 45%;
+}
+.btn {
+  color: black;
+  font-family:  serif;
+}
+@media only screen and (max-width: 375px) {
+  .logo {
+    left: 23%;
+  }
+  .icon {
+    left: 37%;
+    top: 14%;
+  }
+  .btn {
+   font-size: xx-small; 
+   margin-inline-end: -40px;
+  }
 }
