@@ -14,7 +14,8 @@ import Alert from '../Alert';
 //react-draft-wysiwyg
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 
 //imported material UI for styles
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,7 +25,9 @@ import { TextField } from '@material-ui/core';
 import moment from 'moment';
 
 // text editor style
+import './react-draft-wysiwyg.css';
 import './style.css';
+
 
 // Material UI styles for calendar
 const useStyles = makeStyles((theme) => ({
