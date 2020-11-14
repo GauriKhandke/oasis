@@ -12,11 +12,12 @@
 }
 
 .editor-class {
-	/* background-color:#ccc; */
 	padding: 1rem;
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	height: 250px;
+	overflow: auto;
+  box-sizing: border-box;
 }
 
 .editor-class:focus-within {
@@ -29,9 +30,4 @@
 	border-radius: 5px;
 }
 
-/* .rdw-editor-main {
-	height: 250px;
-	overflow: auto;
-  box-sizing: border-box;
-} */
 
