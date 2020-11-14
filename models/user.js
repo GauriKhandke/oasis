@@ -31,7 +31,10 @@ const userSchema = new Schema({
 		type: String,
 		required: 'Password is required',
 		minLength: 6,
-	},
+	}
+
+}, {
+	timestamps: true // this option tells our great mongod to automatically manage createdAt/updatedAt
 });
 
 const User = mongoose.model('User', userSchema);
