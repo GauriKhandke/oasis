@@ -8,6 +8,7 @@
 .wrapper-class {
 	padding: 1rem;
 	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 .editor-class {
@@ -18,7 +19,7 @@
 }
 
 .editor-class:focus-within {
-	border: 2px solid #6495ed;
+	border: 2px solid #fe6b8b;
 }
 
 .toolbar-class {
@@ -26,6 +27,13 @@
 	background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
 	border-radius: 5px;
 }
+
+.rdw-editor-main {
+	height: 250px;
+	overflow: auto;
+  box-sizing: border-box;
+}
+
 #toast.success {
 	right: 10px;
 	background-color: hsl(94, 40%, 86%);
