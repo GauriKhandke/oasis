@@ -64,6 +64,8 @@ export default function Journal() {
               Search
             </FormBtn>
           </div>
+
+         {/*Text Editor container */}
           <Container fluid="xs">
             <Row>
               <Col md={2}></Col>
@@ -74,6 +76,8 @@ export default function Journal() {
               <Col md={2}></Col>
             </Row>
           </Container>
+
+
         </>
       ) : (
         <>
