@@ -1,10 +1,11 @@
 .landingImg {
-  background: url("../../images/landingPage.jpeg") no-repeat center center fixed;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  background-size: cover;
-  /* background-size: 100%; */
+	background: url('https://i.ytimg.com/vi/u50gg0g2txw/maxresdefault.jpg')
+		no-repeat center center fixed;
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	background-size: cover;
+	/* background-size: 100%; */
 }
 .text-center {
   font-family: "Rozha One", serif;
@@ -46,4 +47,12 @@
    font-size: xx-small; 
    margin-inline-end: -40px;
   }
+
+/* .content {
+	font-family: 'Marck Script', cursive;
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	font-size: 45px;
+	transform: translate(-50%, -50%); */
 }

@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "bootstrap": "^4.5.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "emoji-picker-react": "^3.2.4",
@@ -41,9 +40,9 @@
     "if-env": "^1.0.4",
     "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.10.11",
     "morgan": "^1.10.0",
-    "react-bootstrap": "^1.4.0",
     "validator": "^13.1.17"
   }
 }

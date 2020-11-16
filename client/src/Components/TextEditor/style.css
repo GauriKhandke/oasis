@@ -1,0 +1,33 @@
+.borderStyle {
+	border: 3px solid  #fe6b8b;
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: gray;
+}
+
+.wrapper-class {
+	padding: 1rem;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.editor-class {
+	padding: 1rem;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	height: 250px;
+	overflow: auto;
+  box-sizing: border-box;
+}
+
+.editor-class:focus-within {
+	border: 2px solid #fe6b8b;
+}
+
+.toolbar-class {
+	border: 1px solid #ccc;
+	background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+	border-radius: 5px;
+}
+
+
