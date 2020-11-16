@@ -76,8 +76,8 @@ export default function JournalEntryForm() {
 
 	// Fetch content for current date if already entered journal entry
 	useEffect(() => {
-		todayEntryCheck();
-	}, []);
+		todayEntryCheck()
+	});
 
 	//Fetch the data if the user had already entry with current date
 	async function todayEntryCheck() {
