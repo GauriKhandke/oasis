@@ -12,7 +12,7 @@ class LandingPage extends Component {
           <h3 className="position-fixed icon">Oasis</h3>
           <div>
             <Link
-              className="btn btn-outline-dark btn-lg float-right"
+              className="btn btn-outline-dark btn-md float-right"
               to="/login"
             >
               Login

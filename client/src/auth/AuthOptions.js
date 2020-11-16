@@ -22,7 +22,7 @@ export default function AuthOptions() {
       {userData.user ? (
         <>
           <button
-            className=" btn btn-outline-dark btn-lg float-right"
+            className=" btn btn-outline-dark btn-md float-right"
             onClick={logout}
           >
             Logout

@@ -14,7 +14,6 @@ import Alert from '../Alert';
 //react-draft-wysiwyg
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
-// import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 
 //imported material UI for styles
@@ -77,7 +76,7 @@ export default function JournalEntryForm() {
 	// Fetch content for current date if already entered journal entry
 	useEffect(() => {
 		todayEntryCheck()
-	});
+	},[]);
 
 	//Fetch the data if the user had already entry with current date
 	async function todayEntryCheck() {
@@ -246,7 +245,7 @@ export default function JournalEntryForm() {
 								{/* Date Picker */}
 								<TextField
 									id="date"
-									value={date}
+									value={date }
 									label="Date"
 									type="date"
 									variant="outlined"
