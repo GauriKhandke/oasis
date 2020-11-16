@@ -14,7 +14,7 @@ const journalSchema = new Schema({
 	},
 
 	entryDate: {
-		type: String,
+		type: Date,
 		// default: null,
 	},
 
