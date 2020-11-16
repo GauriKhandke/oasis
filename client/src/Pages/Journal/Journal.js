@@ -55,7 +55,7 @@ export default function Journal() {
               }}
               id={'year'}
               name={'year'}
-              classes={'classes btn btn-secondary dropdown-toggle mr-2 mt-2'}
+              classes={'classes btn btn-secondary dropdown-toggle mr-1 mt-2'}
               optionClasses={'option classes'}
             />
             <FormBtn
