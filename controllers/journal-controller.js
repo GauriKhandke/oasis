@@ -107,7 +107,7 @@ module.exports = {
     );
 
     try {
-	  const monthAdjustment = req.query.month - 1;
+	  const monthAdjustment = req.query.month;
     
     console.log("monthAdjustment : " + monthAdjustment);
     
