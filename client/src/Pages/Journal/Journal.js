@@ -8,6 +8,7 @@ import FormBtn from '../../Components/FormBtn';
 // import RecentNotes from '../../Components/RecentNotes';
 import TextEditor from '../../Components/TextEditor';
 // import SearchBar from '../../Components/SearchBar';
+import API from '../../utils/API';
 import './style.css';
 
 export default function Journal() {
@@ -17,6 +18,21 @@ export default function Journal() {
   //Drop down for Year,Month for the user to fetch the Journal Entries from Search Criteria
   const [year, setYear] = useState(undefined);
   const [month, setMonth] = useState(undefined);
+
+  const handleSearch = async () => {
+    console.log("Month: "+ month + " Year: "+ year);
+    
+    const searchEntry = {
+      month: month,
+      year :year
+    }
+
+    console.log( searchEntry );
+    
+    const searchedEntries = await API.checkASearchJournalEntry(month,year,userData.user.id);
+
+    console.log("searchedEntries :" + JSON.stringify(searchedEntries));
+  };
 
   return (
     <>
@@ -38,7 +54,9 @@ export default function Journal() {
               }}
               id={'month'}
               name={'month'}
-              classes={'classes btn btn-secondary dropdown-toggle ml-2 mr-1 mt-2'}
+              classes={
+                'classes btn btn-secondary dropdown-toggle ml-2 mr-1 mt-2'
+              }
               optionClasses={'option classes'}
             />
 
@@ -58,14 +76,10 @@ export default function Journal() {
               classes={'classes btn btn-secondary dropdown-toggle mr-1 mt-2'}
               optionClasses={'option classes'}
             />
-            <FormBtn
-            // onClick={handleFormSubmit}
-            >
-              Search
-            </FormBtn>
+            <FormBtn onClick={handleSearch}>Search</FormBtn>
           </div>
 
-         {/*Text Editor container */}
+          {/*Text Editor container */}
           <Container fluid="xs">
             <Row>
               <Col md={2}></Col>
@@ -76,8 +90,6 @@ export default function Journal() {
               <Col md={2}></Col>
             </Row>
           </Container>
-
-
         </>
       ) : (
         <>
