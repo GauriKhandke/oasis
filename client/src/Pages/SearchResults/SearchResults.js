@@ -5,6 +5,10 @@ import UserContext from '../../Context/UserContext';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 import FormBtn from '../../Components/FormBtn';
+import recentcal from './recentcal.png';
+import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
+import EditIcon from '@material-ui/icons/Edit';
+// import {DeleteRoundedIcon} from '@material-ui/core';
 import API from '../../utils/API';
 
 export default function SearchResults() {
@@ -31,8 +35,8 @@ export default function SearchResults() {
 			userData.user.id
 		);
 
-    setResults(searchedEntries.data);
-    console.log("results: " + results);
+		setResults(searchedEntries.data);
+		console.log('results: ' + results);
 		console.log('searchedEntries :' + JSON.stringify(searchedEntries));
 	};
 
@@ -53,9 +57,10 @@ export default function SearchResults() {
 	return (
 		<div>
 			<Header />
+			<br />
 			{userData.user ? (
 				<>
-					<div className="text-right">
+					<div className="text-center">
 						{/* <SearchBar /> */}
 						<MonthPicker
 							defaultValue={'select month'}
@@ -102,6 +107,7 @@ export default function SearchResults() {
 					</div>
 
 					<br />
+					<br />
 
 					{/*Search Results container */}
 					<Container fluid="xs">
@@ -109,19 +115,50 @@ export default function SearchResults() {
 							<Col md={2}></Col>
 							<Col md={8}>
 								{/* Add search results here */}
-								<h1>Search Results</h1>
+								<div className= "text-center">
+									<h2>Search Results</h2>
+								</div>
+								<br />
 								<div className="d-flex justify-content-center">
 									<Table striped hover>
 										<thead>
 											<tr>
-												<th>Date</th>
-												<th>Title</th>
-												<th></th>
-												<th></th>
+												<th
+													style={{
+														width:
+															'20%',
+														textAlign:
+															'center',
+													}}
+												>
+													Date
+												</th>
+												<th
+													style={{
+														width:
+															'40%',
+														textAlign:
+															'center',
+													}}
+												>
+													Title
+												</th>
+												<th
+													style={{
+														width:
+															'10%',
+													}}
+												></th>
+												<th
+													style={{
+														width:
+															'10%',
+													}}
+												></th>
 											</tr>
 										</thead>
-										{results.length !==
-										0 ? (
+										{results.length !== 0 ? (
+											
 											results.map(
 												({
 													_id,
@@ -135,38 +172,54 @@ export default function SearchResults() {
 																	_id
 																}
 															>
-																<td
-																	data-th="Date"
-																	className="align-middle"
-																>
-																	{
-																		entryDate
-																	}
+																<td data-th="Date" style={{
+																			width:
+																				'20%',
+																			textAlign:
+																				'center',
+																		}}>
+																	<img
+																		src={
+																			recentcal
+																		}
+																		alt="Recent Calendar"
+																	/>
+																	{entryDate.substring(
+																		0,
+																		10
+																	)}
 																</td>
 
 																<td
 																	data-th="Title"
-																	className="align-middle"
+																	style={{
+																		width:
+																			'40%',
+																		textAlign:
+																			'center',
+																	}}
 																>
 																	{
 																		title
 																	}
 																</td>
 
-																<td className="align-middle">
+																<td>
 																	<Button variant="success">
-																		Edit
+																		<EditIcon />
 																	</Button>
 																</td>
 
-																<td className="align-middle">
+																<td>
 																	<Button
 																		variant="danger"
-																		onClick={() => deleteEntry(
-																			_id
-															)}
+																		onClick={() =>
+																			deleteEntry(
+																				_id
+																			)
+																		}
 																	>
-																		Delete
+																		<DeleteRoundedIcon />
 																	</Button>
 																</td>
 															</tr>
