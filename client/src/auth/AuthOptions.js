@@ -17,10 +17,20 @@ export default function AuthOptions() {
     history.push('/');
   };
 
+  const searchPage = () => {
+    history.push('/searchresults');
+  };
+
   return (
     <div>
       {userData.user ? (
         <>
+          <button
+            className=" btn btn-outline-dark btn-md float-right"
+            onClick={searchPage}
+          >
+            Search 
+          </button>
           <button
             className=" btn btn-outline-dark btn-md float-right"
             onClick={logout}
