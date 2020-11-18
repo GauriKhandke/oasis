@@ -123,7 +123,7 @@ module.exports = {
 
 			console.log('monthAdjustment : ' + monthAdjustment);
 
-			const start = new Date(req.query.year, req.query.month, 0);
+			const start = new Date(req.query.year, req.query.month, 1);
 
 			let end = new Date(req.query.year, monthAdjustment, 1);
 			end = new Date(end.setMonth(end.getMonth() + 1));
