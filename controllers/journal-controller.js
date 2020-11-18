@@ -125,25 +125,22 @@ module.exports = {
 
 			const start = new Date(req.query.year, req.query.month, 0);
 
-      let end = new Date(req.query.year, monthAdjustment, 1);
-      end = new Date(end.getFullYear(), end.getMonth() + 1, 0);
+			let end = new Date(req.query.year, monthAdjustment, 1);
+			end = new Date(end.setMonth(end.getMonth() + 1));
 
-      
-      console.log('start : ' + start);
-      console.log('End : ' + end);
+			console.log('start : ' + start);
+			console.log('End : ' + end);
 
 			const searchedEntries = await db.Journal.find({
-				entryDate: { $gte: start.toUTCString(), $lt: end.toUTCString() },
+				entryDate: { $gte: start, $lt: end },
 				userId: mongoose.Types.ObjectId(req.query.userId),
 			}).sort({
-        entryDate: 1
-      });
+				entryDate: 1,
+			});
 			console.log(
 				'\n\nSearched Entry in checkSearchedJournalEntries: ' +
 					JSON.stringify(searchedEntries)
 			);
-
-			
 
 			if (searchedEntries === null) return res.json({});
 			else return res.json(searchedEntries);
