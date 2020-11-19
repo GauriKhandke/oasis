@@ -55,12 +55,12 @@ export default function Journal(props) {
 					{/*Text Editor container */}
 					<Container fluid="xs">
 						<Row>
-							<Col md={2}></Col>
-							<Col md={8}>
+							{/*<Col md={2}></Col>*/} {/*this the cause of over laping */}
+							<Col md={12}>
 								<TextEditor editId = {editId} />
 								{/* <RecentNotes /> */}
 							</Col>
-							<Col md={2}></Col>
+						{/*<Col md={2}></Col>*/} {/*this the cause of over laping */}
 						</Row>
 					</Container>
 				</>
