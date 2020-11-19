@@ -42,14 +42,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function JournalEntryForm() {
+export default function JournalEntryForm(props) {
+  
   // Styles of Material UI
   const classes = useStyles();
-  // const titleClasses = titleStyles();
 
-  // Converting the date format to yyyy-mm-dd
-  const today = moment().format('YYYY MM DD').split(' ').join('-');
-  console.log("today's date is : " + today);
+   //Fetching the values of user
+  const { userData } = useContext(UserContext);
+
+  // Check to see the the user wants to edit the data from search results page
+	const editId =  props.editId ? props.editId : "";
+
+  let today;
 
   // Initializes text editor with empty content
   let editorContent = EditorState.createEmpty();
@@ -63,26 +67,51 @@ export default function JournalEntryForm() {
   });
 
   // local state of date which changes when the user changes a date in the calendar
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState();
 
   // Bootstrap alert for showing success message for create and update entry
   const [error, setError] = useState();
 
-  //Fetching the values of user
-  const { userData } = useContext(UserContext);
 
   // Fetch content for current date if already entered journal entry
   useEffect(() => {
     todayEntryCheck();
   }, []);
 
+  
   //Fetch the data if the user had already entry with current date
   async function todayEntryCheck() {
-    // retrieve a content for current date's journal entry from Database
+    
+    // If the user has to edit his entry
+    if (editId !== ""){
+     
+      // From search results edit ,the data which the user likes to edit will be fetched 
+      const editEntryData = await API.getOneJournalEntry(editId, userData.user.id)
+      
+      today = editEntryData.data.entryDate.substring(0,10);
+
+      // Sets the Date to the user search results edit date
+      setDate(today);
+        
+    }
+    else
+
+    // Fetch the data if the user has an entry already after login
+    {
+      // Converting the date format to yyyy-mm-dd
+      today = moment().format('YYYY MM DD').split(' ').join('-');
+
+      // sets the Date to the current date to fetch the data if the user has an entry already
+      setDate(today); 
+    }
+
+    // Retrieve a content for current date's journal entry from Database
     const todaysEntry = await API.checkAJournalEntry(today, userData.user.id);
 
-    //validation to check if the user had a entry for currnt date
+    // Validation to check if the user had a entry for currnt date
     if (JSON.stringify(todaysEntry.data) !== '{}') {
+      
+      //If the user has already an entry for the current date,sets the title to the tile which the user entered
       setTitle(todaysEntry.data.title);
 
       //parsing the content
@@ -90,23 +119,31 @@ export default function JournalEntryForm() {
 
       // pushing a journal entry to the editorContent
       const editorContent = EditorState.createWithContent(convertedState);
+      
       // changes the state of the editorState
       setEditorState({ editorState: editorContent });
     }
   }
 
+
+
   // Render the ondateChange when the user is trying to change the date
   const onDateChange = async (event) => {
+
     // On date change make title and text editor empty
     setTitle('');
+    
     setEditorState({ editorState: EditorState.createEmpty() });
 
     // Fecthing the date user selected and changes the format of the date
     let dateVal = event.target.value;
+    
     dateVal = dateVal.split(' ').join('-');
+
+    //sets the date onchanging
     setDate(dateVal);
 
-    //AN API call to backend to check whether there is a journal entry for the date the user entered
+    // An API call to backend to check whether there is a journal entry for the date the user entered
     const journalEntryCheck = await API.checkAJournalEntry(
       dateVal,
       userData.user.id
@@ -114,6 +151,7 @@ export default function JournalEntryForm() {
 
     // If there is entry for selected date
     if (JSON.stringify(journalEntryCheck.data) !== '{}') {
+      
       setTitle(journalEntryCheck.data.title);
 
       // Applying fetched data on to editor
@@ -123,19 +161,25 @@ export default function JournalEntryForm() {
 
       //pushing a journal entry to the editorContent
       const editorContent = EditorState.createWithContent(convertedState);
+
       // changes the state of the editorState
       setEditorState({ editorState: editorContent });
     }
   };
 
+
+  
   //change local state of editor
   const handleEditorChange = (editorState) => {
     setEditorState({ editorState });
   };
 
+
   // Render this function when user clicks on submit
   const handleFormSubmit = async (event) => {
+    
     event.preventDefault();
+    
     //If the user had not entered title and content in text area
     if (title === '' || editorState === '') return;
 
@@ -147,7 +191,8 @@ export default function JournalEntryForm() {
 
     //Check to see whether the user aready had an entry for that date
     if (JSON.stringify(journalEntryCheck.data) === '{}') {
-      // body for creating a journal Entry
+      
+      // Body for creating a journal Entry
       const journalEntry = {
         title: title,
         body: JSON.stringify(
@@ -165,6 +210,7 @@ export default function JournalEntryForm() {
         setError('Journal Entry Created successfully!!');
       }
     } else {
+      
       //body for updating the journal Entry
       const updateEntry = {
         title: title,
@@ -202,7 +248,9 @@ export default function JournalEntryForm() {
         <div className="borderStyle">
           <Row>
             <Col md={8} s={6}>
+              
               <form className={classes.container} noValidate autoComplete="off">
+
                 {/* Title Field */}
                 <TextField
                   id="outlined-basic"
@@ -214,8 +262,11 @@ export default function JournalEntryForm() {
                   onChange={(event) => setTitle(event.target.value)}
                 />
               </form>
+
             </Col>
+
             <Col md={4} s={6}>
+              
               <form className={classes.root} noValidate autoComplete="off">
                 {/* Date Picker */}
                 <TextField
@@ -231,8 +282,10 @@ export default function JournalEntryForm() {
                   }}
                 />
               </form>
+              
             </Col>
           </Row>
+          
           <br />
 
           <div className="form-group">
@@ -245,6 +298,7 @@ export default function JournalEntryForm() {
               toolbarClassName="toolbar-class"
             />
           </div>
+          
           <div className="text-center">
             {/* Submit Button */}
             <FormBtn
@@ -255,8 +309,11 @@ export default function JournalEntryForm() {
             </FormBtn>
           </div>
         </div>
+
         <br />
+
         {/* Success alert */}
+        
         {error && (
           <Alert
             message={error}
@@ -264,6 +321,7 @@ export default function JournalEntryForm() {
             clearError={() => setError(undefined)}
           />
         )}
+        
       </Container>
     </div>
   );
