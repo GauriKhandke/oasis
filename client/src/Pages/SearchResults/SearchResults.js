@@ -2,29 +2,49 @@ import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../../Components/Header';
 import UserContext from '../../Context/UserContext';
-import { Container, Row, Col, Table, Button } from 'react-bootstrap';
+import draftToHtml from 'draftjs-to-html';
+import '../../Components/TextEditor/react-draft-wysiwyg.css';
+import { Container, Row, Col, Table, Button, Modal } from 'react-bootstrap';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 import FormBtn from '../../Components/FormBtn';
 import recentcal from './recentcal.png';
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import EditIcon from '@material-ui/icons/Edit';
 import API from '../../utils/API';
+import Alert from '../../Components/Alert';
+import "./style.css";
+
+// moment js
+import moment from 'moment';
+
+
 
 export default function SearchResults() {
 
 	// Fetches the user data
 	const { userData } = useContext(UserContext);
+ 
+	let maxYear = moment().format('YYYY');
+	let setminYear = moment().subtract(10, 'years').calendar();
+	let minYear = setminYear.substring(6,10);
 
 	// Drop down for Year,Month for the user to fetch the Journal Entries from Search Criteria
 	const [year, setYear] = useState(undefined);
 	const [month, setMonth] = useState(undefined);
 	const [results, setResults] = useState([]);
+	const [error, setError] = useState();
+	const [show, setShow] = useState(false);
+	const [title,setTitle]=useState(undefined);
+	const [body, setBody] = useState("");
 
-	console.log('Results: ' + results);
 
 	//  searchedEntries;
 	const handleSearch = async () => {
 		console.log('Month: ' + month + ' Year: ' + year);
+		
+		if (isNaN(month) || isNaN(year)){
+			setError("Select both month and year");
+		}
 
 		var searchedEntries = await API.checkASearchJournalEntry(
 			month,
@@ -33,31 +53,62 @@ export default function SearchResults() {
 		);
 
 		setResults(searchedEntries.data);
-		console.log('results: ' + results);
-		console.log('searchedEntries :' + JSON.stringify(searchedEntries));
 	};
 
 	const deleteEntry = async (noteId) => {
-		console.log('deleteEntry noteId: ' + noteId);
+		// Deletes the journal entry when the user clicks on delete Icon
 		const deletedEntry = await API.removeOneJournalEntry(
 			noteId,
 			userData.user.id
 		);
 
+   // Filters the data after user deltes the Entry
 		const remainingEntries = results.filter(
 			(result) => noteId !== result._id
 		);
+
 		setResults(remainingEntries);
-		console.log(' Deleted Entry: ' + deletedEntry);
 	};
 
+	const handleClose = () => setShow(false);
+	
+	const viewEntry = async (noteId) => {
+		setShow(true);
+	
+			const viewEntryData = await API.getOneJournalEntry(noteId, userData.user.id);
+		
+			setTitle(viewEntryData.data.title);
+			setBody(viewEntryData.data.body);
+	}
+
+	if (body !== "") {
+				console.log(title);
+			console.log("body: " + JSON.stringify(body));
+			const data =JSON.parse(body);
+			// console.log("DATA : " + data);
+			// console.log(JSON.parse(data));
+		
+			console.log(typeof(data));
+			// console.log(typeof(data));
+
+			console.log(typeof({"blocks":[{"key":"6durh","text":"this is pratyusha's testing update","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}));
+			console.log("equal?: "+   body === {"blocks":[{"key":"6durh","text":"this is pratyusha's testing update","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}});
+			console.log("body : " + draftToHtml(data));
+			}
+			
 	return (
 		<div>
 			<Header />
 			<br />
 			{userData.user ? (
 				<>
-					<div className="text-center">
+				<Row>
+
+			    <Col md={6}>
+					  <Link to="/journal">  ← Back to Journal Entry Page</Link>
+				  </Col>
+					<Col md ={6}>
+					<div className="text-right">
 						{/* <SearchBar /> */}
 						<MonthPicker
 							defaultValue={'select month'}
@@ -82,8 +133,8 @@ export default function SearchResults() {
 
 						<YearPicker
 							defaultValue={'select year'}
-							start={2010} // default is 1900
-							end={2030} // default is current year
+							start={minYear} // default is 1900
+							end={maxYear} // default is current year
 							reverse // default is ASCENDING
 							required={true} // default is false
 							value={year} // mandatory
@@ -102,26 +153,50 @@ export default function SearchResults() {
 						/>
 						<FormBtn onClick={handleSearch}>Search</FormBtn>
 					</div>
+					</Col>
+					</Row>
 
 					<br />
 					<br />
-
+					
 					{/*Search Results container */}
 					<Container fluid="xs">
+				
 						<Row>
 							<Col md={2}></Col>
 							<Col md={8}>
-
-								{/* Add search results here */}
-								<div className= "text-center">
-									<h2>Search Results</h2>
-								</div>
-
 								<br />
 
+				       
+								{/* Add search results here */}
 								<div className="d-flex justify-content-center">
+									
+									{/* validation alert for year and month*/}
+               {error && (
+                 <Alert
+                   message={error}
+                   type="danger"
+									 clearError={() => setError(undefined)
+									}
+									style={{ width: '50%',textAlign:'center'}}
+                 />
+                )}
 
-									<Table striped hover>
+									{results.length ? (
+										<>
+										<Container>
+										<Row >
+											<Col md={12}>
+												<div className= "text-center">
+								     	    <h2>Search Results</h2>
+											   </div>
+											 </Col>
+							    	</Row>
+										<br/>
+										
+										<Row>
+											<Col md ={12}>
+											<Table striped hover>
 										<thead>
 											<tr>
 												<th style={{ width:'20%', textAlign: 'center', }} >
@@ -132,50 +207,69 @@ export default function SearchResults() {
 												</th>
 												<th style={{ width: '10%', }} ></th>
 												<th style={{ width: '10%', }} ></th>
+												<th style={{ width: '10%', }} ></th>
 											</tr>
 										</thead>
-											
-										{results.length !== 0 ? (
-											
-											results.map(
-												({ _id,	title, entryDate, }) => {
-													return (
-														<tbody>
-															<tr key={	_id	} >
-																
-																<td data-th="Date" style={{ width: '20%',textAlign:'center', }}>
-																	<img src= { recentcal}alt="Recent Calendar" />
-																	{entryDate.substring(	0, 10)}
-																</td>
-
-																<td data-th="Title" style={{ width: '40%',textAlign: 'center', }} >
-																	{	title	}
-																</td>
-
-																<td >
-																 <Button variant="success" >
-																	<Link to={{ pathname: '/journal', state: { noteId: _id } }} style={{ color:'white'}}>
-																		<EditIcon />
-																	</Link>
-																 </Button>	
-																</td>
-
-																<td>
-																	<Button	variant="danger" onClick={() => deleteEntry( _id	)	}	>
-																		<DeleteRoundedIcon />
-																	</Button>
-																</td>
-															</tr>
-														</tbody>
-													);
-												}
-											)
+              	<tbody>
+                {results.map(result => (
+									// <tbody>
+                  <tr key={result._id}>
 										
-										) : (
-											<></>
-										)
-										}
-								 </Table>
+                   	<td data-th="Date" style={{ width: '20%',textAlign:'center', }}>
+											<img src= {recentcal}alt="Recent Calendar" />
+											{result.entryDate.substring(	0, 10)}
+										</td>
+
+										<td data-th="Title" style={{ width: '40%',textAlign: 'center', }} >
+											{	result.title	}
+										</td>
+
+								    	<td>
+											<Button	variant="success" onClick={() => viewEntry( result._id	)	}	>
+											view
+											</Button>
+											<Modal  numberanimation="true" scrollable="true" backdropClassName="modal-backdrop" size ='lg' show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+
+							         	<Modal.Title>{title}</Modal.Title>
+                        </Modal.Header>
+												<Modal.Body> 
+												{ body.length > 0 &&
+													<div 
+															dangerouslySetInnerHTML={{ __html:draftToHtml(JSON.parse(body))}} >
+													</div>
+												}
+													</Modal.Body>
+                       </Modal>
+										</td>
+
+										<td >
+											<Button variant="success" >
+												<Link to={{ pathname: '/journal', state: { noteId: result._id } }} style={{ color:'white'}}>
+													<EditIcon />
+												</Link>
+											</Button>	
+										</td>
+
+										<td>
+											<Button	variant="danger" onClick={() => deleteEntry( result._id	)	}	>
+												<DeleteRoundedIcon />
+											</Button>
+										</td>
+                 </tr>
+                ))}
+              </tbody>
+							</Table>
+							</Col>
+							</Row>
+							</Container>
+							</>
+									
+             ) : (
+              <> </>
+            )}
+					
+
 								</div>
 							</Col>
 							<Col md={2}></Col>
