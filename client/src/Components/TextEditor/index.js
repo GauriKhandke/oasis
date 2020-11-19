@@ -319,11 +319,6 @@ export default function JournalEntryForm(props) {
           </div>
         </div>
 
-        <textarea
-          disabled
-          value={draftToHtml(convertToRaw(editorState.editorState.getCurrentContent()))}
-        />
-
         <br />
 
         {/* Success alert */}
