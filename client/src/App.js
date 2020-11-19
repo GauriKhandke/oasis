@@ -5,6 +5,7 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Journal from './Pages/Journal/Journal';
 import SearchResults from './Pages/SearchResults/SearchResults';
+import TextEditor from './Components/TextEditor';
 import UserContext from './Context/UserContext';
 import API from './utils/API';
 import './App.css';
@@ -47,11 +48,8 @@ function App() {
 					<Route path="/login" exact component={Login} />
 					<Route path="/signup" exact component={Signup} />
 					<Route path="/journal" exact component={Journal} />
-					<Route
-						path="/searchresults"
-						exact
-						component={SearchResults}
-					/>
+					<Route path="/searchresults" exact component={SearchResults}/>
+					{/* <Route path="/editor" exact component={TextEditor}/> */}
 				</Switch>
 			</UserContext.Provider>
 		</Router>

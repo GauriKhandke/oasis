@@ -11,10 +11,12 @@ import TextEditor from '../../Components/TextEditor';
 import API from '../../utils/API';
 import './style.css';
 
-export default function Journal() {
+export default function Journal(props) {
 	//Fetches the user data
 	const { userData } = useContext(UserContext);
 
+	const editId = props.location.state ? props.location.state.noteId : "";
+	console.log("editId : " + editId);
 	// const history = useHistory();
 
 	// //Drop down for Year,Month for the user to fetch the Journal Entries from Search Criteria
@@ -55,7 +57,7 @@ export default function Journal() {
 						<Row>
 							<Col md={2}></Col>
 							<Col md={8}>
-								<TextEditor />
+								<TextEditor editId = {editId} />
 								{/* <RecentNotes /> */}
 							</Col>
 							<Col md={2}></Col>

@@ -8,23 +8,20 @@ import FormBtn from '../../Components/FormBtn';
 import recentcal from './recentcal.png';
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import EditIcon from '@material-ui/icons/Edit';
-// import {DeleteRoundedIcon} from '@material-ui/core';
 import API from '../../utils/API';
 
 export default function SearchResults() {
-	//Fetches the user data
+
+	// Fetches the user data
 	const { userData } = useContext(UserContext);
 
-	const history = useHistory();
-
-	//Drop down for Year,Month for the user to fetch the Journal Entries from Search Criteria
+	// Drop down for Year,Month for the user to fetch the Journal Entries from Search Criteria
 	const [year, setYear] = useState(undefined);
 	const [month, setMonth] = useState(undefined);
 	const [results, setResults] = useState([]);
 
 	console.log('Results: ' + results);
 
-	// console.log("Search results data from journal page: "+history.location.state.searchedData);
 	//  searchedEntries;
 	const handleSearch = async () => {
 		console.log('Month: ' + month + ' Year: ' + year);
@@ -114,111 +111,57 @@ export default function SearchResults() {
 						<Row>
 							<Col md={2}></Col>
 							<Col md={8}>
+
 								{/* Add search results here */}
 								<div className= "text-center">
 									<h2>Search Results</h2>
 								</div>
+
 								<br />
+
 								<div className="d-flex justify-content-center">
+
 									<Table striped hover>
 										<thead>
 											<tr>
-												<th
-													style={{
-														width:
-															'20%',
-														textAlign:
-															'center',
-													}}
-												>
+												<th style={{ width:'20%', textAlign: 'center', }} >
 													Date
 												</th>
-												<th
-													style={{
-														width:
-															'40%',
-														textAlign:
-															'center',
-													}}
-												>
+												<th style={{ width: '40%', textAlign: 'center', }} >
 													Title
 												</th>
-												<th
-													style={{
-														width:
-															'10%',
-													}}
-												></th>
-												<th
-													style={{
-														width:
-															'10%',
-													}}
-												></th>
+												<th style={{ width: '10%', }} ></th>
+												<th style={{ width: '10%', }} ></th>
 											</tr>
 										</thead>
+											
 										{results.length !== 0 ? (
 											
 											results.map(
-												({
-													_id,
-													title,
-													entryDate,
-												}) => {
+												({ _id,	title, entryDate, }) => {
 													return (
 														<tbody>
-															<tr
-																key={
-																	_id
-																}
-															>
-																<td data-th="Date" style={{
-																			width:
-																				'20%',
-																			textAlign:
-																				'center',
-																		}}>
-																	<img
-																		src={
-																			recentcal
-																		}
-																		alt="Recent Calendar"
-																	/>
-																	{entryDate.substring(
-																		0,
-																		10
-																	)}
+															<tr key={	_id	} >
+																
+																<td data-th="Date" style={{ width: '20%',textAlign:'center', }}>
+																	<img src= { recentcal}alt="Recent Calendar" />
+																	{entryDate.substring(	0, 10)}
 																</td>
 
-																<td
-																	data-th="Title"
-																	style={{
-																		width:
-																			'40%',
-																		textAlign:
-																			'center',
-																	}}
-																>
-																	{
-																		title
-																	}
+																<td data-th="Title" style={{ width: '40%',textAlign: 'center', }} >
+																	{	title	}
 																</td>
 
-																<td>
-																	<Button variant="success">
+																<td >
+																 <Button variant="success" >
+																	<Link to={{ pathname: '/journal', state: { noteId: _id } }} style={{ color:'white'}}>
 																		<EditIcon />
-																	</Button>
+																	</Link>
+																 </Button>	
 																</td>
 
 																<td>
-																	<Button
-																		variant="danger"
-																		onClick={() =>
-																			deleteEntry(
-																				_id
-																			)
-																		}
-																	>
+																	<Button	variant="danger" onClick={() => deleteEntry( _id	)	}	>
 																		<DeleteRoundedIcon />
 																	</Button>
 																</td>
@@ -227,10 +170,12 @@ export default function SearchResults() {
 													);
 												}
 											)
+										
 										) : (
-											<>No results found!</>
-										)}
-									</Table>
+											<></>
+										)
+										}
+								 </Table>
 								</div>
 							</Col>
 							<Col md={2}></Col>
