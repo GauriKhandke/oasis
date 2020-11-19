@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-
+import draftToHtml from 'draftjs-to-html';
 // importing Grid from react bootstrap
 import { Row, Col, Container } from 'react-bootstrap';
 
@@ -54,6 +54,11 @@ export default function JournalEntryForm(props) {
 	const editId =  props.editId ? props.editId : "";
 
   let today;
+  let maxDate= moment().format('YYYY MM DD').split(' ').join('-');
+  
+  
+  let minDate=moment().subtract(10, 'years').calendar();
+  console.log("min Date :" + minDate);
 
   // Initializes text editor with empty content
   let editorContent = EditorState.createEmpty();
@@ -237,6 +242,8 @@ export default function JournalEntryForm(props) {
     }
   };
 
+ 
+
   // JSX to render the page
   return (
     <div>
@@ -270,12 +277,14 @@ export default function JournalEntryForm(props) {
               <form className={classes.root} noValidate autoComplete="off">
                 {/* Date Picker */}
                 <TextField
+                  // shouldDisableDate={disablePrevDates(startDate)}
                   id="date"
                   value={date}
                   label="Date"
                   type="date"
                   variant="outlined"
                   className={classes.calendarTextField}
+                  InputProps={{ inputProps: { max : maxDate } }}
                   onChange={onDateChange}
                   InputLabelProps={{
                     shrink: true,

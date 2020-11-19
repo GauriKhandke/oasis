@@ -18,8 +18,8 @@ function Alert(props) {
 				type="button"
 				className="close"
 				data-dismiss="alert"
-        aria-label="Close"
-        onClick={props.clearError}
+                aria-label="Close"
+                onClick={props.clearError}
 			>
 				<span aria-hidden="true">&times;</span>
 			</button>
