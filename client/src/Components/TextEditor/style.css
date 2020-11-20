@@ -26,8 +26,10 @@
 
 .toolbar-class {
 	border: 1px solid #ccc;
-	background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+	background: linear-gradient(45deg, #556270 30%, #ff6b6b 90%);
 	border-radius: 5px;
 }
-
+.card-border{
+	border-radius: 15px;
+}
 

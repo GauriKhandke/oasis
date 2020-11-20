@@ -1,0 +1,13 @@
+#searchbutton {
+background-color: gray;
+  color: white;
+  font-weight: 100;
+  border-radius: 5px;
+}
+
+#logoutButton{
+  background-color: gray;
+  color: white;
+  font-weight: 100;
+  border-radius: 5px;
+}

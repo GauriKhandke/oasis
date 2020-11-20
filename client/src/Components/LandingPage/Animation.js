@@ -14,9 +14,9 @@ export default class Animation extends React.Component {
     render() {
         return (
             <StyleRoot>
-                <div className="text-center" style={styles.lightSpeedIn}>
-                <h1>Discover Oasis</h1>
-                <h2>Keep a Diary, One day it will keep you</h2>
+                <div className="animation-center" style={styles.lightSpeedIn}>
+
+                <h1>Allow your words to escape you.</h1>
                 </div>
             </StyleRoot>
         )

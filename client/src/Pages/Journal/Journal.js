@@ -1,71 +1,49 @@
-import React, { useContext, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
-import Header from '../../Components/Header';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+
+// React Hook for User data
 import UserContext from '../../Context/UserContext';
-import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
-import FormBtn from '../../Components/FormBtn';
-// import RecentNotes from '../../Components/RecentNotes';
+
+// Importing Components
+import Header from '../../Components/Header';
 import TextEditor from '../../Components/TextEditor';
-// import SearchBar from '../../Components/SearchBar';
-import API from '../../utils/API';
+
+// Styling
+import { Container, Row, Col } from 'react-bootstrap';
 import './style.css';
 
 export default function Journal(props) {
 	//Fetches the user data
 	const { userData } = useContext(UserContext);
 
-	const editId = props.location.state ? props.location.state.noteId : "";
-	console.log("editId : " + editId);
-	// const history = useHistory();
-
-	// //Drop down for Year,Month for the user to fetch the Journal Entries from Search Criteria
-	// const [year, setYear] = useState(undefined);
-	// const [month, setMonth] = useState(undefined);
-
-	// const handleSearch = async () => {
-	// 	console.log('Month: ' + month + ' Year: ' + year);
-
-	// 	const searchedEntries = await API.checkASearchJournalEntry(
-	// 		month,
-	// 		year,
-	// 		userData.user.id
-	// 	);
-
-		// console.log('searchedEntries :' + JSON.stringify(searchedEntries));
-
-		// const location = {
-		// 	pathname: '/searchresults',
-		// 	state: { entries: searchedEntries },
-		// };
-
-		// console.log('Location: ' + location);
-
-		// history.push({
-		// 	pathname: '/searchresults',
-		// 	state: { searchedData: searchedEntries },
-		// }); // your data array of objects
-	// };
+	// Fetches the noteId from search page if the user wants to edit the Journal Entry
+	const editId = props.location.state ? props.location.state.noteId : '';
+	console.log('editId : ' + editId);
 
 	return (
 		<>
+			{/* Header component */}
 			<Header />
+			{/* If user is logged in then show journal page */}
 			{userData.user ? (
 				<>
-					{/*Text Editor container */}
-					<Container fluid="xs">
-						<Row>
-							<Col md={2}></Col>
-							<Col md={8}>
-								<TextEditor editId = {editId} />
-								{/* <RecentNotes /> */}
-							</Col>
-							<Col md={2}></Col>
-						</Row>
-					</Container>
+					<div className="background-img">
+						{/*Text Editor container */}
+						<Container fluid="xs">
+							<Row>
+								<Col md={2}></Col>
+								<Col md={8}>
+									{/* Journal Entry Text Editor */}
+									<TextEditor editId={editId} />
+								</Col>
+								<Col md={2}></Col>
+							</Row>
+						</Container>
+					</div>
 				</>
 			) : (
 				<>
+					{/* If the ser is not logged in redirect to login page */}
 					<h2 className="text-center">
 						<Link to="/login">Please login</Link>
 					</h2>
