@@ -1,4 +1,6 @@
-
+.makeStyles-paper-1 {
+	margin-top: 15px !important;
+}
 .background-img {
 	/* background: url('../../images/SweetMorning.jpg') no-repeat center center
 		fixed; */
@@ -6,5 +8,7 @@
 	width: 100%;
 	background-size: cover;
 	background: linear-gradient(45deg, #DBE6F6 30%, #C5796D 90%);
-	  overflow: auto;
+}
+.card-border{
+	border-radius: 15px;
 }

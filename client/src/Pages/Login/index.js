@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import userContext from '../../Context/UserContext';
 import API from '../../utils/API';
 import Alert from '../../Components/Alert';
+import { Card } from 'react-bootstrap';
+import './style.css';
 import {
 	Avatar,
 	Button,
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(1),
 	},
 	submit: {
-		background: 'linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%)',
+		background: 'linear-gradient(45deg, #556270 30%, #ff6b6b 90%)',
 		margin: theme.spacing(3, 0, 2),
 	},
 }));
@@ -59,6 +61,7 @@ export default function Login() {
 			});
 
 			localStorage.setItem('auth-token', loginRes.data.token);
+			localStorage.setItem('user', loginRes.data.user);
 			history.push('/journal');
 		} catch (error) {
 			console.log('Error : ' + error);
@@ -67,74 +70,110 @@ export default function Login() {
 	};
 
 	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className={classes.paper}>
-				<Avatar className={classes.avatar}></Avatar>
-				<Typography component="h1" variant="h5">
-					Login
-				</Typography>
-				{error && (
-					<Alert
-						message={error}
-						type="danger"
-						clearError={() => setError(undefined)}
-					/>
-				)}
-				<form
-					className={classes.form}
-					onSubmit={handleSubmit}
-					noValidate
-				>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						id="email"
-						label="Email Address"
-						name="email"
-						autoComplete="email"
-						autoFocus
-						onChange={(event) => setEmail(event.target.value)}
-					/>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						name="password"
-						label="Password"
-						type="password"
-						id="password"
-						autoComplete="current-password"
-						onChange={(event) =>
-							setPassword(event.target.value)
-						}
-					/>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}
+		<>
+			<div className="background-img">
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<div className="d-flex justify-content-center my-auto">
+					<Card
+						className="shadow z-depth-8 card-border"
+						style={{ width: '25rem' }}
 					>
-						Login
-					</Button>
-					<Grid container>
-						<Grid item xs>
-							<Link href="#" variant="body2">
-								Forgot password?
-							</Link>
-						</Grid>
-						<Grid item>
-							<Link href="/signup" variant="body2">
-								{"Don't have an account? Sign Up"}
-							</Link>
-						</Grid>
-					</Grid>
-				</form>
+						<Card.Body>
+							<Container component="main" maxWidth="xs">
+								<CssBaseline />
+								<div className={classes.paper}>
+									<Avatar
+										className={classes.avatar}
+									></Avatar>
+									<Typography
+										component="h1"
+										variant="h5"
+									>
+										Login
+									</Typography>
+									{error && (
+										<Alert
+											message={error}
+											type="danger"
+											clearError={() =>
+												setError(undefined)
+											}
+										/>
+									)}
+									<form
+										className={classes.form}
+										onSubmit={handleSubmit}
+										noValidate
+									>
+										<TextField
+											variant="outlined"
+											margin="normal"
+											required
+											fullWidth
+											id="email"
+											label="Email Address"
+											name="email"
+											autoComplete="email"
+											autoFocus
+											onChange={(event) =>
+												setEmail(
+													event.target
+														.value
+												)
+											}
+										/>
+										<TextField
+											variant="outlined"
+											margin="normal"
+											required
+											fullWidth
+											name="password"
+											label="Password"
+											type="password"
+											id="password"
+											autoComplete="current-password"
+											onChange={(event) =>
+												setPassword(
+													event.target
+														.value
+												)
+											}
+										/>
+										<Button
+											type="submit"
+											fullWidth
+											variant="contained"
+											color="primary"
+											className={
+												classes.submit
+											}
+										>
+											Login
+										</Button>
+										<Grid container>
+											<Grid item xs></Grid>
+											<Grid item>
+												<Link
+													href="/signup"
+													variant="body2"
+												>
+													{
+														"Don't have an account? Sign Up"
+													}
+												</Link>
+											</Grid>
+										</Grid>
+									</form>
+								</div>
+							</Container>
+						</Card.Body>
+					</Card>
+				</div>
 			</div>
-		</Container>
+		</>
 	);
 }

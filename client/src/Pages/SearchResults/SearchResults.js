@@ -4,7 +4,7 @@ import Header from '../../Components/Header';
 import UserContext from '../../Context/UserContext';
 import draftToHtml from 'draftjs-to-html';
 import '../../Components/TextEditor/react-draft-wysiwyg.css';
-import { Container, Row, Col, Table, Button, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Table, Button, Modal, Card } from 'react-bootstrap';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 import FormBtn from '../../Components/FormBtn';
 import recentcal from './recentcal.png';
@@ -97,18 +97,20 @@ export default function SearchResults() {
 			}
 			
 	return (
-		<div>
-			<Header />
+		<>
+		<Header />
+		<div className= "background-img">
+	
 			<br />
 			{userData.user ? (
 				<>
 				<Row>
 
 			    <Col md={6}>
-					  <Link to="/journal">  ← Back to Journal Entry Page</Link>
+					  <Link to="/journal" className="ml-2">← Back to Journal Entry Page</Link>
 				  </Col>
 					<Col md ={6}>
-					<div className="text-right">
+					<div className="text-right mr-2">
 						{/* <SearchBar /> */}
 						<MonthPicker
 							defaultValue={'select month'}
@@ -151,7 +153,7 @@ export default function SearchResults() {
 							}
 							optionClasses={'option classes'}
 						/>
-						<FormBtn onClick={handleSearch}>Search</FormBtn>
+						<FormBtn className="btn btn-secondary" onClick={handleSearch}>Search</FormBtn>
 					</div>
 					</Col>
 					</Row>
@@ -184,7 +186,13 @@ export default function SearchResults() {
 
 									{results.length ? (
 										<>
+							
 										<Container>
+										<Card
+						className="shadow z-depth-8 card-border mx-1 my-1"
+						// style={{ width: '50rem' }}
+					>
+						<Card.Body>
 										<Row >
 											<Col md={12}>
 												<div className= "text-center">
@@ -196,7 +204,7 @@ export default function SearchResults() {
 										
 										<Row>
 											<Col md ={12}>
-											<Table striped hover>
+											<Table striped hover responsive="sm" >
 										<thead>
 											<tr>
 												<th style={{ width:'20%', textAlign: 'center', }} >
@@ -220,7 +228,8 @@ export default function SearchResults() {
 											{result.entryDate.substring(	0, 10)}
 										</td>
 
-										<td data-th="Title" style={{ width: '40%',textAlign: 'center', }} >
+										<td data-th="Title" className="table-data" 
+										style={{ width :'40%', textAlign:'center'}} >
 											{	result.title	}
 										</td>
 
@@ -262,6 +271,9 @@ export default function SearchResults() {
 							</Table>
 							</Col>
 							</Row>
+						
+							</Card.Body>
+							</Card>
 							</Container>
 							</>
 									
@@ -284,5 +296,6 @@ export default function SearchResults() {
 				</>
 			)}
 		</div>
+		</>
 	);
 }

@@ -1,58 +1,48 @@
 .landingImg {
-	background: url('../../images/diary1.jpg')
-		no-repeat center center fixed;
-	height: 100vh;
+	background: url('../../images/Diary.jpg') no-repeat center center fixed;
+	/* height: 100vh;
 	width: 100%;
 	display: flex;
 	background-size: cover;
-	/* background-size: 100%; */
+	background-size: 100%; */
+	background-size: cover;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .animation-center {
-  font-family: "Rozha One", serif;
-  color: white;
-  position: absolute;
-  top: 40%;
-  left: 10%;
-}
-.jumbotron {
-  background-color: rgb(255, 255, 255);
-  width: 100%;
-  padding: 65px;
-}
-.logo {
-  position: absolute;
-  top: 2%;
-  left: 42%;
-}
-.icon {
-  position: absolute;
-  font-family:  serif;
-  font-size: 50px;
-  top: 13%;
-  left: 45%;
-}
-/* .btn {
-  color: black;
-  font-family:  serif;
-} */
-@media only screen and (max-width: 375px) {
-  .logo {
-    left: 23%;
-  }
-  .icon {
-    left: 37%;
-    top: 14%;
-  }
-  /* .btn {
-   font-size: xx-small; 
-   margin-inline-end: -40px;
-  } */
-
-/* .content {
-	font-family: 'Marck Script', cursive;
+	font-family: 'Rozha One', serif;
+	color: white;
 	position: absolute;
-	top: 20%;
-	left: 50%;
-	font-size: 45px;
-	transform: translate(-50%, -50%); */
+	top: 40%;
+	left: 10%;
 }
+
+
+.logo {
+	position: absolute;
+	border-radius: 50%;
+	width: 120px;
+	top: 5%;
+	float: left;
+}
+
+@media only screen and (max-width: 375px) {
+	.logo {
+		left: 3%;
+	}
+	
+}
+
+@media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 1.5) {
+	 	.logo {
+		left: 1%;
+	
+	}	 
+
+}
+
