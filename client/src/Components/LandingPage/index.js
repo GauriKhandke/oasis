@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Container } from 'react-bootstrap';
+import { Jumbotron } from 'react-bootstrap';
 import './style.css';
 import logo from '../../images/logo.png';
 import Animation from './Animation';
@@ -12,7 +12,7 @@ class LandingPage extends Component {
           <div>
             <img className="logo" src={logo} alt="logo"></img>
             <Link
-              className="btn btn-outline-dark btn-md float-right"
+              className="btn btn-outline-dark btn-md float-right custom-btn"
               to="/login" >
               Login
             </Link>

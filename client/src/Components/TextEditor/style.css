@@ -33,3 +33,10 @@
 	border-radius: 15px;
 }
 
+.headingText{
+	background: -webkit-linear-gradient(#48525c, #ff6b6b);
+  -webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-family: 'Big Shoulders Inline Text', cursive;
+}
+

@@ -3,7 +3,9 @@ import { useHistory } from 'react-router-dom';
 import userContext from '../../Context/UserContext';
 import API from '../../utils/API';
 import Alert from '../../Components/Alert';
-import { Card } from 'react-bootstrap';
+import { Card, Jumbotron } from 'react-bootstrap';
+import HomeIcon from '@material-ui/icons/Home';
+import logo from '../../images/logo5.jpg';
 import './style.css';
 import {
 	Avatar,
@@ -69,11 +71,23 @@ export default function Login() {
 		}
 	};
 
+	const gotoHome = () => {
+		history.push('/');
+	};
+
 	return (
 		<>
 			<div className="background-img">
-				<br />
-				<br />
+			<Jumbotron className="JumbotronStyle" fluid="true" style={{ background:'#f5f5f5' , borderRadius: '5px', paddingLeft :'15px', paddingRight :'15px', paddingTop :'40px', paddingBottom :'65px', margin: '0px'}}>
+          <div>
+            <img className="logo" src={logo} alt="logo"></img>
+            <button
+              className="btn btn-outline-dark btn-md float-right custom-btn"
+              onClick = {gotoHome} >
+              <HomeIcon style= {{ fontSize: 25 }} />
+            </button>
+          </div>
+        </Jumbotron>
 				<br />
 				<br />
 				<br />

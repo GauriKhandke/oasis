@@ -12,7 +12,9 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Alert from '../../Components/Alert';
-import { Card } from 'react-bootstrap';
+import { Card, Jumbotron } from 'react-bootstrap';
+import HomeIcon from '@material-ui/icons/Home';
+import logo from '../../images/logo5.jpg';
 import API from '../../utils/API';
 import './style.css';
 const useStyles = makeStyles((theme) => ({
@@ -69,17 +71,29 @@ export default function Signup() {
 		}
 	};
 
+	const gotoHome = () => {
+		history.push('/');
+	};
+
 	return (
 		<>
 			<div className="background-img">
-				<br />
-				<br />
+			<Jumbotron className="JumbotronStyle" fluid="true" style={{ background:'#f5f5f5' , borderRadius: '5px', paddingLeft :'15px', paddingRight :'15px', paddingTop :'40px', paddingBottom :'65px', margin: '0px'}}>
+          <div>
+            <img className="signuplogo" src={logo} alt="logo"></img>
+            <button
+              className="btn btn-outline-dark btn-md float-right custom-btn"
+              onClick = {gotoHome} >
+              <HomeIcon style= {{ fontSize: 25 }} />
+            </button>
+          </div>
+        </Jumbotron>
 				<br />
 				<br />
 				<br />
 				<div className="d-flex justify-content-center my-auto">
 					<Card
-						className="shadow z-depth-8 card-border"
+						className="shadow z-depth-8 card-border mx-2 mb-3"
 						style={{ width: '30rem' }}
 					>
 						<Card.Body>
