@@ -12,3 +12,11 @@
 .card-border{
 	border-radius: 15px;
 }
+
+.signuplogo {
+	position: absolute;
+	border-radius: 50%;
+	width: 70px;
+	top: 2%;
+	float: left;
+}

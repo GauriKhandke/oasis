@@ -32,14 +32,14 @@ export default function AuthOptions() {
 				<>	
 				 
 					 	<button
-							className=" btn btn-outline-dark btn-md mr-2 float-right"
+							className=" btn btn-outline-dark btn-md mr-2 float-right custom-btn"
 							onClick={logout}
 						>
 							Logout
 						</button>
 
 						<button
-							className=" btn btn-outline-dark btn-md mr-2 float-right"
+							className=" btn btn-outline-dark btn-md mr-2 float-right custom-btn"
 							onClick={searchPage}
 						>
 					

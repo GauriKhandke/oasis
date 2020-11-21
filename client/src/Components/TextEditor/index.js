@@ -254,7 +254,7 @@ export default function JournalEntryForm(props) {
 				<Card.Body>
 					<Card.Title>
 						<div className="text-center">
-							<h2>Enter your Journal Entry</h2>
+							<h2 className= "headingText">Enter your Journal Entry</h2>
 						</div>
 					</Card.Title>
 					<br />

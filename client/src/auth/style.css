@@ -1,13 +1,24 @@
 #searchbutton {
-background-color: gray;
-  color: white;
-  font-weight: 100;
-  border-radius: 5px;
+	background-color: gray;
+	color: white;
+	font-weight: 100;
+	border-radius: 5px;
 }
 
-#logoutButton{
-  background-color: gray;
-  color: white;
-  font-weight: 100;
-  border-radius: 5px;
+#logoutButton {
+	background-color: gray;
+	color: white;
+	font-weight: 100;
+	border-radius: 5px;
+}
+.custom-btn {
+	border-radius: 3 !important;
+  border: 1 !important;
+  background: white!important;
+	height: 80 !important;
+	box-shadow: 0 3px 5px 2px rgba(255, 105, 135, 0.3) !important;
+}
+
+.custom-btn:hover {
+	background: linear-gradient(45deg, #556270 30%, #ff6b6b 90%) !important;
 }

@@ -159,7 +159,6 @@ export default function SearchResults() {
 					</Row>
 
 					<br />
-					<br />
 					
 					{/*Search Results container */}
 					<Container fluid="xs">
@@ -196,7 +195,7 @@ export default function SearchResults() {
 										<Row >
 											<Col md={12}>
 												<div className= "text-center">
-								     	    <h2>Search Results</h2>
+								     	    <h2 className= "headingText" >Search Results</h2>
 											   </div>
 											 </Col>
 							    	</Row>
@@ -234,7 +233,7 @@ export default function SearchResults() {
 										</td>
 
 								    	<td>
-											<Button	variant="success" onClick={() => viewEntry( result._id	)	}	>
+											<Button	variant='secondary' onClick={() => viewEntry( result._id	)	}	>
 											view
 											</Button>
 											<Modal  numberanimation="true" scrollable="true" backdropClassName="modal-backdrop" size ='lg' show={show} onHide={handleClose}>
@@ -253,7 +252,7 @@ export default function SearchResults() {
 										</td>
 
 										<td >
-											<Button variant="success" >
+											<Button variant='secondary'>
 												<Link to={{ pathname: '/journal', state: { noteId: result._id } }} style={{ color:'white'}}>
 													<EditIcon />
 												</Link>
@@ -295,7 +294,11 @@ export default function SearchResults() {
 					</h2>
 				</>
 			)}
+		<br />
+		<br />
+		<br />
 		</div>
+		
 		</>
 	);
 }
