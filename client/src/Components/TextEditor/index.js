@@ -1,7 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import draftToHtml from 'draftjs-to-html';
-// importing Grid from react bootstrap
-import { Row, Col, Container, Card } from 'react-bootstrap';
 
 // custom react hook
 import UserContext from '../../Context/UserContext';
@@ -15,12 +12,15 @@ import Alert from '../Alert';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 
+// moment js
+import moment from 'moment';
+ 
+// importing Grid from react bootstrap
+import { Row, Col, Container, Card } from 'react-bootstrap';
+
 //imported material UI for styles
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
-
-// moment js
-import moment from 'moment';
 
 // text editor style
 import './react-draft-wysiwyg.css';
@@ -28,20 +28,19 @@ import './style.css';
 
 // Material UI styles for calendar
 const useStyles = makeStyles((theme) => ({
+	
 	container: {
 		display: 'flex',
 		flexWrap: 'wrap',
 	},
+
 	calendarTextField: {
-		margin: theme.spacing(1),
-		width: '30ch',
 		width: '100%',
 		paddingLeft: '0',
 	    margin: '5',
-
 	},
+
 	titleTextField: {
-		margin: theme.spacing(1),
 		width: '70ch',
 		paddingRight: '0',
 		margin: '5',
@@ -49,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function JournalEntryForm(props) {
+	
 	// Styles of Material UI
 	const classes = useStyles();
 
@@ -59,10 +59,11 @@ export default function JournalEntryForm(props) {
 	const editId = props.editId ? props.editId : '';
 
 	let today;
+
+	// Calendar max Date set to today 
 	let maxDate = moment().format('YYYY MM DD').split(' ').join('-');
 
-	let minDate = moment().subtract(10, 'years').calendar();
-	console.log('min Date :' + minDate);
+	// let minDate = moment().subtract(10, 'years').calendar();
 
 	// Initializes text editor with empty content
 	let editorContent = EditorState.createEmpty();
@@ -86,10 +87,14 @@ export default function JournalEntryForm(props) {
 		todayEntryCheck();
 	}, []);
 
+
+
 	//Fetch the data if the user had already entry with current date
 	async function todayEntryCheck() {
+		
 		// If the user has to edit his entry
 		if (editId !== '') {
+			
 			// From search results edit ,the data which the user likes to edit will be fetched
 			const editEntryData = await API.getOneJournalEntry(
 				editId,
@@ -104,6 +109,7 @@ export default function JournalEntryForm(props) {
 
 		// Fetch the data if the user has an entry already after login
 		else {
+			
 			// Converting the date format to yyyy-mm-dd
 			today = moment().format('YYYY MM DD').split(' ').join('-');
 
@@ -119,6 +125,7 @@ export default function JournalEntryForm(props) {
 
 		// Validation to check if the user had a entry for currnt date
 		if (JSON.stringify(todaysEntry.data) !== '{}') {
+			
 			//If the user has already an entry for the current date,sets the title to the tile which the user entered
 			setTitle(todaysEntry.data.title);
 
@@ -137,8 +144,11 @@ export default function JournalEntryForm(props) {
 		}
 	}
 
+
+
 	// Render the ondateChange when the user is trying to change the date
 	const onDateChange = async (event) => {
+		
 		// On date change make title and text editor empty
 		setTitle('');
 
@@ -177,13 +187,17 @@ export default function JournalEntryForm(props) {
 		}
 	};
 
+
+
 	//change local state of editor
 	const handleEditorChange = (editorState) => {
 		setEditorState({ editorState });
 	};
 
+
 	// Render this function when user clicks on submit
 	const handleFormSubmit = async (event) => {
+		
 		event.preventDefault();
 
 		//If the user had not entered title and content in text area
@@ -197,6 +211,7 @@ export default function JournalEntryForm(props) {
 
 		//Check to see whether the user aready had an entry for that date
 		if (JSON.stringify(journalEntryCheck.data) === '{}') {
+			
 			// Body for creating a journal Entry
 			const journalEntry = {
 				title: title,
@@ -217,6 +232,7 @@ export default function JournalEntryForm(props) {
 				setError('Journal Entry Created successfully!!');
 			}
 		} else {
+			
 			//body for updating the journal Entry
 			const updateEntry = {
 				title: title,
@@ -245,11 +261,14 @@ export default function JournalEntryForm(props) {
 		}
 	};
 
+
+
 	// JSX to render the page
 	return (
 		<div>
 			<br />
 			<br />
+			{/* text editor card */}
 			<Card className="shadow z-depth-5 card-border my-2 mx-2">
 				<Card.Body>
 					<Card.Title>
@@ -299,7 +318,6 @@ export default function JournalEntryForm(props) {
 										>
 											{/* Date Picker */}
 											<TextField
-												// shouldDisableDate={disablePrevDates(startDate)}
 												id="date"
 												value={date}
 												label="Date"
@@ -327,6 +345,7 @@ export default function JournalEntryForm(props) {
 								<br />
 
 								<div className="form-group">
+									
 									{/* Text Editor */}
 									<Editor
 										editorState={
@@ -342,9 +361,9 @@ export default function JournalEntryForm(props) {
 								</div>
 
 								<div className="text-center">
+									
 									{/* Submit Button */}
 									<FormBtn
-										// disabled={!title || !body}
 										onClick={handleFormSubmit}
 									>
 										Submit
@@ -355,7 +374,6 @@ export default function JournalEntryForm(props) {
 							<br />
 
 							{/* Success alert */}
-
 							{error && (
 								<Alert
 									message={error}

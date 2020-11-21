@@ -1,16 +1,24 @@
-import React, { Component } from 'react';
+import React,{ Component } from 'react';
 import { Link } from 'react-router-dom';
+
+// Styling
 import { Jumbotron } from 'react-bootstrap';
-import './style.css';
-import logo from '../../images/logo.png';
 import Animation from './Animation';
+import logo from '../../images/logo5.jpg';
+import './style.css';
+
 class LandingPage extends Component {
   render() {
     return (
       <>
+       {/* Jumbotron  */}
          <Jumbotron className="JumbotronStyle" fluid="true" style={{ background:'#f5f5f5' , borderRadius: '5px', paddingLeft :'15px', paddingRight :'15px', paddingTop :'40px', paddingBottom :'65px', margin: '0px'}}>
+          
           <div>
+            {/* Logo */}
             <img className="logo" src={logo} alt="logo"></img>
+
+            {/* Login Button */}
             <Link
               className="btn btn-outline-dark btn-md float-right custom-btn"
               to="/login" >
@@ -18,15 +26,10 @@ class LandingPage extends Component {
             </Link>
           </div>
         </Jumbotron>
-
-        <div className="landingImg  ">
-          <Animation>
-            <div className="text-center">
-            <div className="animation-center">
-              <h4>Allow your words to escape you.</h4>
-            </div>
-            </div>
-          </Animation>
+        
+        {/*Animation for the landing page text  */}
+        <div className="landingImg">
+          <Animation />
         </div>
       </>
     );

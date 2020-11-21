@@ -1,7 +1,10 @@
 import axios from 'axios';
-// import { findAllEntries } from '../../../controllers/journal-controller';
+
 
 export default {
+
+  // User authentication API calls
+
   // imported from App.js (check for a valid token)
   checkValidToken: function (token) {
     return axios.post('/isValidToken', null, {
@@ -24,24 +27,18 @@ export default {
     return axios.post('/api/signup', newUser);
   },
 
+  
   // Journal API calls :
-
+  
+  //  check Journal entry for the the particular entry date
   checkAJournalEntry: function (entryDate, userId) {
-    console.log('Entry Date : ' + entryDate + ' UserId : ' + userId);
     return axios.get('/api/notes/entrydate/' + entryDate, {
       params: { userId },
     });
   },
 
-  // API call to fetch all journal entries of logged in user
-  // findAllJournalEntries: function (userId) {
-  //   return axios.get('/api/notes', userId);
-  // },
-
   // Create journal entry
   createJournalEntry: function (journalEntry) {
-    // const createTest = axios.post('/api/notes', journalEntry);
-    // console.log("create test :" + JSON.stringify(createTest));
     return axios.post('/api/notes', journalEntry);
   },
 
@@ -57,19 +54,9 @@ export default {
     });
   },
 
-  // updateJournalEntry : function(entryDate, userId){
-  //   console.log("Entry Date : "+entryDate+ " UserId : "+userId);
-  //   return axios.get('/api/notes/'+ entryDate, { params : {userId} });
-  // }
-
+// check Journal entries based on search results for particular month
   checkASearchJournalEntry: function (month,year, userId) {
-    // console.log(' searchEntry : ' + JSON.stringify(searchEntry));
     console.log(' user id : ' + userId + "month :" +month +"year :" + year);
-    const test = axios.get('/api/notes', {
-      params: { month,year,userId }
-    });
-
-    console.log('test : ' + JSON.stringify(test));
     return axios.get('/api/notes' ,{
       params: { month,year,userId }
     });

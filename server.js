@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const logger = require("morgan");
 const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
@@ -27,13 +26,10 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/oasis-diary",{
 });
 
 // Define API routes here
-// Add routes, both API and view
 app.use("/",require("./routes/user-routes"));
 app.use("/api/notes",require("./routes/journal-routes"));
 
-
 // Send every other request to the React app
-// Define any API routes before this runs
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });

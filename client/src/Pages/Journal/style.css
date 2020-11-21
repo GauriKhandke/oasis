@@ -1,10 +1,7 @@
-
 .background-img {
-	/* background: url('../../images/SweetMorning.jpg') no-repeat center center
-		fixed; */
-	height: 100vh;
-	width: 100%;
-	background-size: cover;
-	background: linear-gradient(45deg, #DBE6F6 30%, #C5796D 90%);
-	  overflow: auto;
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background: linear-gradient(45deg, #dbe6f6 30%, #c5796d 90%);
+  overflow: auto;
 }

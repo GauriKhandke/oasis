@@ -13,28 +13,33 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './style.css';
 
 export default function Journal(props) {
+	
 	//Fetches the user data
 	const { userData } = useContext(UserContext);
 
 	// Fetches the noteId from search page if the user wants to edit the Journal Entry
 	const editId = props.location.state ? props.location.state.noteId : '';
-	console.log('editId : ' + editId);
 
 	return (
 		<>
+			
 			{/* Header component */}
 			<Header />
+			
 			{/* If user is logged in then show journal page */}
 			{userData.user ? (
 				<>
 					<div className="background-img">
+						
 						{/*Text Editor container */}
 						<Container fluid="xs">
 							<Row>
 								<Col md={2}></Col>
 								<Col md={8}>
+									
 									{/* Journal Entry Text Editor */}
 									<TextEditor editId={editId} />
+								
 								</Col>
 								<Col md={2}></Col>
 							</Row>
@@ -43,9 +48,9 @@ export default function Journal(props) {
 				</>
 			) : (
 				<>
-					{/* If the ser is not logged in redirect to login page */}
+					{/* If the user is not logged in redirect to login page */}
 					<h2 className="text-center">
-						<Link to="/login">Please login</Link>
+						<Link to="/">Please login</Link>
 					</h2>
 				</>
 			)}

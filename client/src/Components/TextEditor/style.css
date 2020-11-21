@@ -1,42 +1,38 @@
-.borderStyle {
-	border: 3px solid  #fe6b8b;
-	border-radius: 10px;
-	padding: 20px;
-	box-shadow: gray;
-}
-
+/* Text editor style */
 .wrapper-class {
-	padding: 1rem;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
+/* Text editor style */
 .editor-class {
-	padding: 1rem;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	height: 250px;
-	overflow: auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 250px;
+  overflow: auto;
   box-sizing: border-box;
 }
-
+/* Text editor style */
 .editor-class:focus-within {
-	border: 2px solid #fe6b8b;
+  border: 2px solid #ff6b6b;
 }
 
+/* Text editor style */
 .toolbar-class {
-	border: 1px solid #ccc;
-	background: linear-gradient(45deg, #556270 30%, #ff6b6b 90%);
-	border-radius: 5px;
-}
-.card-border{
-	border-radius: 15px;
+  border: 1px solid #ccc;
+  background: linear-gradient(45deg, #566574 30%, #ee4b4b 90%);
+  border-radius: 5px;
 }
 
-.headingText{
-	background: -webkit-linear-gradient(#48525c, #ff6b6b);
+.card-border {
+  border-radius: 15px;
+}
+
+.headingText {
+  background: -webkit-linear-gradient(#3a444e, #d84e4e);
   -webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	font-family: 'Big Shoulders Inline Text', cursive;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Big Shoulders Inline Text', cursive;
 }
-

@@ -1,61 +1,90 @@
 import React, { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link} from 'react-router-dom';
+
+// Components
 import Header from '../../Components/Header';
-import UserContext from '../../Context/UserContext';
-import draftToHtml from 'draftjs-to-html';
-import '../../Components/TextEditor/react-draft-wysiwyg.css';
-import { Container, Row, Col, Table, Button, Modal, Card } from 'react-bootstrap';
-import { YearPicker, MonthPicker } from 'react-dropdown-date';
 import FormBtn from '../../Components/FormBtn';
-import recentcal from './recentcal.png';
-import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
-import EditIcon from '@material-ui/icons/Edit';
-import API from '../../utils/API';
 import Alert from '../../Components/Alert';
-import "./style.css";
+
+import UserContext from '../../Context/UserContext';
+
+// API
+import API from '../../utils/API';
+
+// Draft js to HTML package
+import draftToHtml from 'draftjs-to-html';
 
 // moment js
 import moment from 'moment';
 
+// React drop down date
+import { YearPicker, MonthPicker } from 'react-dropdown-date';
+
+// Draft js CSS
+import '../../Components/TextEditor/react-draft-wysiwyg.css';
+
+// Styles
+import recentcal from './recentcal.png';
+import EditIcon from '@material-ui/icons/Edit';
+import { Container, Row, Col, Table, Button, Modal, Card } from 'react-bootstrap';
+import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
+import "./style.css";
 
 
+// Search results Page
 export default function SearchResults() {
 
 	// Fetches the user data
 	const { userData } = useContext(UserContext);
  
+	// Max year for year dropdown
 	let maxYear = moment().format('YYYY');
+
+	// Min year for year dropdown
 	let setminYear = moment().subtract(10, 'years').calendar();
 	let minYear = setminYear.substring(6,10);
 
-	// Drop down for Year,Month for the user to fetch the Journal Entries from Search Criteria
+	// Drop down for Year, Month for the user to fetch the Journal Entries from Search Criteria
 	const [year, setYear] = useState(undefined);
 	const [month, setMonth] = useState(undefined);
+
+	// Search results for selected month and year
 	const [results, setResults] = useState([]);
 	const [error, setError] = useState();
+
+	// Set show for modal
 	const [show, setShow] = useState(false);
+
+	// Set Title for Journal entry to convert to html
 	const [title,setTitle]=useState(undefined);
+
+	// Set body for Journal entry to convert to html
 	const [body, setBody] = useState("");
 
 
-	//  searchedEntries;
+	// Search entries for selected month and year
 	const handleSearch = async () => {
-		console.log('Month: ' + month + ' Year: ' + year);
 		
+		// Validation for month and year
 		if (isNaN(month) || isNaN(year)){
 			setError("Select both month and year");
 		}
 
+		// API call for searching the journal entries for a particular month
 		var searchedEntries = await API.checkASearchJournalEntry(
 			month,
 			year,
 			userData.user.id
 		);
-
+		
+		// sete the searched entry results
 		setResults(searchedEntries.data);
 	};
 
+	
+	// Delete Journal entry
 	const deleteEntry = async (noteId) => {
+		
 		// Deletes the journal entry when the user clicks on delete Icon
 		const deletedEntry = await API.removeOneJournalEntry(
 			noteId,
@@ -66,42 +95,39 @@ export default function SearchResults() {
 		const remainingEntries = results.filter(
 			(result) => noteId !== result._id
 		);
-
+		
+		// set the remaining results after the user deletes the journal entry
 		setResults(remainingEntries);
 	};
 
+	
+	// modal close 
 	const handleClose = () => setShow(false);
 	
+	
+	// view the entries on clicking view
 	const viewEntry = async (noteId) => {
+		
 		setShow(true);
 	
-			const viewEntryData = await API.getOneJournalEntry(noteId, userData.user.id);
+		//  API call for fetching the Journal entry
+		const viewEntryData = await API.getOneJournalEntry(noteId, userData.user.id);
 		
-			setTitle(viewEntryData.data.title);
-			setBody(viewEntryData.data.body);
+		//set title to  view entry data
+		setTitle(viewEntryData.data.title);
+		//set boduy to view entry data
+		setBody(viewEntryData.data.body);
 	}
-
-	if (body !== "") {
-				console.log(title);
-			console.log("body: " + JSON.stringify(body));
-			const data =JSON.parse(body);
-			// console.log("DATA : " + data);
-			// console.log(JSON.parse(data));
-		
-			console.log(typeof(data));
-			// console.log(typeof(data));
-
-			console.log(typeof({"blocks":[{"key":"6durh","text":"this is pratyusha's testing update","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}));
-			console.log("equal?: "+   body === {"blocks":[{"key":"6durh","text":"this is pratyusha's testing update","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}});
-			console.log("body : " + draftToHtml(data));
-			}
-			
+	
+	// Search Results JSX
 	return (
 		<>
+		{/* header component */}
 		<Header />
 		<div className= "background-img">
 	
 			<br />
+			{/* If authenticated user */}
 			{userData.user ? (
 				<>
 				<Row>
@@ -109,21 +135,20 @@ export default function SearchResults() {
 			    <Col md={6}>
 					  <Link to="/journal" className="ml-2">← Back to Journal Entry Page</Link>
 				  </Col>
+
 					<Col md ={6}>
 					<div className="text-right mr-2">
+						
 						{/* <SearchBar /> */}
 						<MonthPicker
 							defaultValue={'select month'}
-							short // default is full name
-							endYearGiven // mandatory if end={} is given in YearPicker
-							year={year} // mandatory
-							required={true} // default is false
-							value={month} // mandatory
+							short 
+							endYearGiven 
+							year={year} 
+							required={true} 
+							value={month} 
 							onChange={(month) => {
 								setMonth(month);
-								console.log(
-									'month : ' + JSON.stringify(month)
-								);
 							}}
 							id={'month'}
 							name={'month'}
@@ -135,16 +160,13 @@ export default function SearchResults() {
 
 						<YearPicker
 							defaultValue={'select year'}
-							start={minYear} // default is 1900
-							end={maxYear} // default is current year
-							reverse // default is ASCENDING
-							required={true} // default is false
-							value={year} // mandatory
+							start={minYear} 
+							end={maxYear}
+							reverse 
+							required={true} 
+							value={year} 
 							onChange={(year) => {
 								setYear(year);
-								console.log(
-									'year : ' + JSON.stringify(year)
-								);
 							}}
 							id={'year'}
 							name={'year'}
@@ -153,6 +175,7 @@ export default function SearchResults() {
 							}
 							optionClasses={'option classes'}
 						/>
+						{/* search button */}
 						<FormBtn className="btn btn-secondary" onClick={handleSearch}>Search</FormBtn>
 					</div>
 					</Col>
@@ -167,13 +190,12 @@ export default function SearchResults() {
 							<Col md={2}></Col>
 							<Col md={8}>
 								<br />
-
-				       
-								{/* Add search results here */}
+ 
+								{/* Search results here */}
 								<div className="d-flex justify-content-center">
 									
-									{/* validation alert for year and month*/}
-               {error && (
+								{/* validation alert for year and month*/}
+               	{error && (
                  <Alert
                    message={error}
                    type="danger"
@@ -187,24 +209,23 @@ export default function SearchResults() {
 										<>
 							
 										<Container>
-										<Card
-						className="shadow z-depth-8 card-border mx-1 my-1"
-						// style={{ width: '50rem' }}
-					>
-						<Card.Body>
-										<Row >
-											<Col md={12}>
-												<div className= "text-center">
-								     	    <h2 className= "headingText" >Search Results</h2>
-											   </div>
-											 </Col>
-							    	</Row>
+										<Card className="shadow z-depth-8 card-border mx-1 my-1" >
+											<Card.Body>
+											<Row >
+												<Col md={12}>
+													<div className= "text-center">
+								     	   		<h2 className= "headingText" >Search Results</h2>
+											   	</div>
+											 	</Col>
+							    		</Row>
 										<br/>
 										
 										<Row>
 											<Col md ={12}>
+												
+											{/* Search results table */}
 											<Table striped hover responsive="sm" >
-										<thead>
+											<thead>
 											<tr>
 												<th style={{ width:'20%', textAlign: 'center', }} >
 													Date
@@ -219,7 +240,7 @@ export default function SearchResults() {
 										</thead>
               	<tbody>
                 {results.map(result => (
-									// <tbody>
+									//  Table body
                   <tr key={result._id}>
 										
                    	<td data-th="Date" style={{ width: '20%',textAlign:'center', }}>
@@ -233,9 +254,13 @@ export default function SearchResults() {
 										</td>
 
 								    	<td>
+											
+											{/* View Button */}
 											<Button	variant='secondary' onClick={() => viewEntry( result._id	)	}	>
 											view
 											</Button>
+
+											{/* Modal for view journal entry */}
 											<Modal  numberanimation="true" scrollable="true" backdropClassName="modal-backdrop" size ='lg' show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
 
@@ -250,7 +275,7 @@ export default function SearchResults() {
 													</Modal.Body>
                        </Modal>
 										</td>
-
+                    {/* view button */}
 										<td >
 											<Button variant='secondary'>
 												<Link to={{ pathname: '/journal', state: { noteId: result._id } }} style={{ color:'white'}}>
@@ -258,7 +283,7 @@ export default function SearchResults() {
 												</Link>
 											</Button>	
 										</td>
-
+                    {/* Delete button */}
 										<td>
 											<Button	variant="danger" onClick={() => deleteEntry( result._id	)	}	>
 												<DeleteRoundedIcon />
@@ -280,7 +305,6 @@ export default function SearchResults() {
               <> </>
             )}
 					
-
 								</div>
 							</Col>
 							<Col md={2}></Col>
@@ -290,7 +314,7 @@ export default function SearchResults() {
 			) : (
 				<>
 					<h2 className="text-center">
-						<Link to="/login">Please login</Link>
+						<Link to="/">Please login</Link>
 					</h2>
 				</>
 			)}
