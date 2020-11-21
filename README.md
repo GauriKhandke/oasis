@@ -8,23 +8,17 @@ Online journal Application that allows both young and young at heart to write th
 
 This application is built using **MERN Stack** and **Draft js rich TextEditor** where user can pick a calendar date and write a journal entry using all the styles of text editor. Also user can search journal entries for particular month and view, edit or delete them.
 
+#### **[Deployed Application](https://oasis-diary.herokuapp.com/)**
+
 ## Table of Contents
 
 * [Demo](#demo)
-
 * [Preview](#preview)
-
 * [Features](#features)
-
 * [Installation](#installation)
-
 * [Technology](#technology)
-
 * [Contributors](#contributors)
-
 * [Questions](#Questions)
-
-### **[Deployed Website](https://oasis-diary.herokuapp.com/)**
 
 # Demo : 
 
@@ -56,7 +50,7 @@ This application is built using **MERN Stack** and **Draft js rich TextEditor** 
 
 5. User can also view, update, delete their Journal entries got from search results.
 
-## Installation
+# Installation
 
 1. Clone the [repo](https://github.com/GauriKhandke/oasis) to your local machine.
 
@@ -68,29 +62,28 @@ This application is built using **MERN Stack** and **Draft js rich TextEditor** 
 4. Run `npm start` to start the application. Your app should now be running on <http://localhost:3000>.
 
 
-## Technology:
+# Technology:
 
-### [React](https://reactjs.org/):
+#### [React](https://reactjs.org/):
 * React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.
 
-### [Draft JS](https://draftjs.org/);
+#### [Draft JS](https://draftjs.org/):
 * Draft JS provides the building blocks to enable the creation of a broad variety of rich text composition experiences, from basic text styles to embedded media.
 
-### [Express](https://www.npmjs.com/package/expres)
+#### [Express](https://www.npmjs.com/package/expres):
 * Express is a minimal and flexible Node.js web application framework that provides a robust set of features to develop web and mobile applications. It facilitates the rapid development of Node based Web applications.
 
-### [MongoDB](https://www.mongodb.com/):
+#### [MongoDB](https://www.mongodb.com/):
 * MongoDB is a general purpose, document-based, distributed database built for modern application developers and for the cloud era.
 
-### [Node.js ]
+#### [Node.js ](https://nodejs.org/en/):
 * Node.js is an open-source and cross-platform JavaScript runtime environment.A Node.js app is run in a single process, without creating a new thread for every request.
 
-### [JSON Web Token](https://www.npmjs.com/package/jsonwebtoken):
+#### [JSON Web Token](https://www.npmjs.com/package/jsonwebtoken):
 * JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties.  The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON. Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted.
 
-### [BCRYPT](https://www.npmjs.com/package/bcrypt):
+#### [BCRYPT](https://www.npmjs.com/package/bcrypt):
 * A library to help you hash passwords.
-
 
 # License
 
