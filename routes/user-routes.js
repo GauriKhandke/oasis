@@ -15,8 +15,11 @@ router.route('/isValidToken').post(userController.checkValidToken);
 
 //Authenticate user
 router.get('/', auth , async (req, res) => {
+
+  // Find User into database to authenticate user
 	const user = await User.findById(req.user);
-	console.log("User Id is " + req.user);
+
+  // Send user information to client side
     res.json({
       id: user._id,
       firstname: user.firstname,

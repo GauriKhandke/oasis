@@ -1,59 +1,70 @@
 import React, { useState } from 'react';
-import {
-	Avatar,
-	Button,
-	CssBaseline,
-	TextField,
-	Link,
-	Grid,
-	Typography,
-	makeStyles,
-	Container,
-} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+
+// Components
 import Alert from '../../Components/Alert';
+
+// API
+import API from '../../utils/API';
+
+// Styling
+import { Avatar, Button, CssBaseline, TextField, Link, Grid, Typography, makeStyles, Container } from '@material-ui/core';
 import { Card, Jumbotron } from 'react-bootstrap';
 import HomeIcon from '@material-ui/icons/Home';
 import logo from '../../images/logo5.jpg';
-import API from '../../utils/API';
 import './style.css';
+
+// Material UI styles
 const useStyles = makeStyles((theme) => ({
+	
 	paper: {
 		marginTop: theme.spacing(8),
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
 	},
+	
 	avatar: {
 		margin: theme.spacing(1),
 		backgroundColor: theme.palette.secondary.main,
 	},
+	
 	form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(3),
 	},
+	
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 		background: 'linear-gradient(45deg, #556270 30%, #ff6b6b 90%)',
 	},
 }));
 
+
+// Sign up page
 export default function Signup() {
+	
 	const classes = useStyles();
 
+	// Set User data
 	const [firstname, setFirstName] = useState();
 	const [lastname, setLastName] = useState();
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
 	const [confirmPassword, setConfirmPassword] = useState();
+
+	//set error for validations
 	const [error, setError] = useState();
 
 	const history = useHistory();
 
+	// Handle sign up form submit
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		try {
+
+			// Create new user
 			const newUser = {
 				firstname,
 				lastname,
@@ -62,26 +73,37 @@ export default function Signup() {
 				confirmPassword,
 			};
 
+		// Register new user into database
 			await API.SignUpRes(newUser);
 
+			// After signup, go to login page
 			history.push('/login');
+
 		} catch (error) {
-			console.log(error);
 			error.response.data.msg && setError(error.response.data.msg);
 		}
 	};
 
+	// Home button goes back to landing page 
 	const gotoHome = () => {
 		history.push('/');
 	};
 
+
+	// JSX
 	return (
 		<>
 			<div className="background-img">
-			<Jumbotron className="JumbotronStyle" fluid="true" style={{ background:'#f5f5f5' , borderRadius: '5px', paddingLeft :'15px', paddingRight :'15px', paddingTop :'40px', paddingBottom :'65px', margin: '0px'}}>
+				
+				{/* jumbotron  */}
+				<Jumbotron className="JumbotronStyle" fluid="true" style={{ background:'#f5f5f5' , borderRadius: '5px', paddingLeft :'15px', paddingRight :'15px', paddingTop :'40px', paddingBottom :'65px', margin: '0px'}}>
           <div>
+
+						{/* Logo */}
             <img className="signuplogo" src={logo} alt="logo"></img>
-            <button
+           
+					 	{/* button for going back to landing page */}
+					  <button
               className="btn btn-outline-dark btn-md float-right custom-btn"
               onClick = {gotoHome} >
               <HomeIcon style= {{ fontSize: 25 }} />
@@ -92,6 +114,8 @@ export default function Signup() {
 				<br />
 				<br />
 				<div className="d-flex justify-content-center my-auto">
+					
+					{/* Sign up form card */}
 					<Card
 						className="shadow z-depth-8 card-border mx-2 mb-3"
 						style={{ width: '30rem' }}
@@ -109,6 +133,8 @@ export default function Signup() {
 									>
 										Sign Up
 									</Typography>
+
+									{/* Validation alert */}
 									{error && (
 										<Alert
 											message={error}
@@ -118,6 +144,7 @@ export default function Signup() {
 											}
 										/>
 									)}
+
 									<form
 										className={classes.form}
 										onSubmit={handleSubmit}
@@ -129,6 +156,7 @@ export default function Signup() {
 												xs={12}
 												sm={6}
 											>
+												{/* Firstname input */}
 												<TextField
 													autoComplete="fname"
 													name="firstname"
@@ -154,6 +182,7 @@ export default function Signup() {
 												xs={12}
 												sm={6}
 											>
+												{/* Lastname input */}
 												<TextField
 													variant="outlined"
 													required
@@ -174,6 +203,8 @@ export default function Signup() {
 												/>
 											</Grid>
 											<Grid item xs={12}>
+
+												{/* Email Input */}
 												<TextField
 													variant="outlined"
 													required
@@ -194,6 +225,8 @@ export default function Signup() {
 												/>
 											</Grid>
 											<Grid item xs={12}>
+												
+												{/* Password Input */}
 												<TextField
 													variant="outlined"
 													required
@@ -215,6 +248,8 @@ export default function Signup() {
 												/>
 											</Grid>
 											<Grid item xs={12}>
+												
+												{/* Confirm Password input */}
 												<TextField
 													variant="outlined"
 													required
@@ -236,6 +271,8 @@ export default function Signup() {
 												/>
 											</Grid>
 										</Grid>
+
+										{/* Submit button */}
 										<Button
 											type="submit"
 											fullWidth

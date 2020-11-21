@@ -4,23 +4,19 @@ var validator = require('validator');
 const db = require('../models');
 
 module.exports = {
+  
   // Register new user
   signupUser: async ({ body }, res) => {
     try {
+      
       let { firstname, lastname, email, password, confirmPassword } = body;
-
-      console.log(
-        'The signup list is : ' + firstname,
-        lastname,
-        email,
-        password
-      );
 
       // validation for Empty Fields
       if (!firstname || !lastname || !email || !password || !confirmPassword) {
         return res.status(400).json({ msg: 'Fields cannot be empty' });
       }
-      // validation email
+
+      // validation for email
       if (!validator.isEmail(email))
         return res.status(400).json({
           msg: 'Please enter a valid Email',
@@ -48,18 +44,16 @@ module.exports = {
       // hashing the password using bcrypt js
       const salt = await bcrypt.genSalt();
       const hashedPwd = await bcrypt.hash(password, salt);
-      console.log('Hashed Password : ' + hashedPwd);
 
       // Create new user to register into db
-	  const newUser = new db.User({
+	   const newUser = new db.User({
         firstname,
         lastname,
         email,
         password: hashedPwd,
       });
-
-      console.log('New User : ' + newUser);
-
+     
+      //saves the user data in the DB after clicking on signup
       const savedUser = await newUser.save();
       res.json(savedUser);
     } catch (err) {
@@ -71,9 +65,7 @@ module.exports = {
   loginUser: async ({ body }, res) => {
     try {
       let { email, password } = body;
-	  console.warn('Email,Password :' + email, password);
-	  console.log("Test the code");
-
+	 
       //validations
 
       // validations for empty fields
@@ -88,7 +80,7 @@ module.exports = {
 
       // fetching the data from DB
       const user = await db.User.findOne({ email: email });
-      console.log(user);
+
       // If user does not exists
       if (!user)
         return res.status(400).json({
@@ -101,11 +93,9 @@ module.exports = {
       // If password do not match
       if (!pwdMatch)
         return res.status(400).json({ msg: 'Invalid Credentials' });
-
-      console.log('Password Match : ' + pwdMatch);
-
+      
+        //on login a random JWT token is generated for user authentication
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-      console.log('token: ' + token);
 
       res.json({
         token,
@@ -125,13 +115,14 @@ module.exports = {
     try {
       const token = req.header('x-auth-token');
 
+      // If token is invalid 
       if (!token) return res.json(false);
-
+      
+      //verifying the token to check if it is valid
       const verified = jwt.verify(token, process.env.JWT_SECRET);
       if (!verified) return res.json(false);
-
-      console.log('Verified User : ' + JSON.stringify(verified));
-
+      
+      //After JWT token is verified,check the user credentials
       const user = await User.findById(verified.id);
       if (!user) return res.json(false);
 

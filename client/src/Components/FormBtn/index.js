@@ -1,5 +1,9 @@
 import React from 'react';
+
+// Importing style
 import './style.css';
+
+// Form Button
 
 export default function FormBtn(props) {
 	return (

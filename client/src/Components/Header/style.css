@@ -1,21 +1,7 @@
-/* .btn {
-    position: absolute;
-    top: 8px;
-    right: 16px;
-  }
-  .nav {
-    font-family: 'Marck Script', cursive;
-  } */
-  /* .jumbotronStyle{
-    border-radius: 3px;
-    margin:0px !important;
-    padding :40px !important
-  } */
-
-  .logo {
+.logo {
     position: absolute;
     border-radius: 50%;
     width: 70px;
     top: 2%;
     float: left;
-  }
+}
